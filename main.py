@@ -29,6 +29,9 @@ driver.get('https://web.whatsapp.com')
 input("enter")
 
 
+
+
+
 # for contact in excel_data['Contact'].tolist():
 #     try:
 #         url = 'https://web.whatsapp.com/send?phone=' + '+91' + str(contact) + '&text=' + \
