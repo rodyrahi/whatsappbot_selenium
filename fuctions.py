@@ -3,10 +3,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-name = []
-got_name = False
-stop = False
-name_index = 0
+sent = False
+
+
+
+
 # options = Options()
 # options.add_argument('--profile-directory=Profile 6')
 # options.add_argument(
