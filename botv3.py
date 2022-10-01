@@ -1,9 +1,14 @@
+import schedule
+
 import fuctions as funcs
 from selenium.webdriver import Keys
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import os
+import sys
+sys.setrecursionlimit(10**6)
 
 options = Options()
 options.add_argument('--profile-directory=Profile 6')
@@ -14,6 +19,9 @@ driver = webdriver.Chrome(executable_path="C:\dev\chromedriver\chromedriver.exe"
 driver.get('https://web.whatsapp.com')
 
 input("enter")
+
+
+
 
 
 class questions():
@@ -126,8 +134,18 @@ question_15 = questions(message=
                        Courses with Pricing
                        Say YES to Schedule call
                        """)
-
-
+unrecognised = questions(message=
+                       """
+                       Please Type "Hey" to get Started!
+                       """)
+stop_bot = questions(message=
+                       """
+                       Bot is stopped
+                       """)
+start_bot = questions(message=
+                       """
+                       bot-started
+                       """)
 
 def send_image():
     filepath = r'C:\Users\Home\Desktop\kamingo_icon.png'
@@ -145,21 +163,20 @@ def send_image():
 
 
 def last2nd_message():
-
     lastmessage = driver.find_elements(By.CLASS_NAME, 'message-out')
-    message = lastmessage[-1].text
-
-    message = message.split()
-    message = message[:-2]
-    message = ' '.join(message)
-
-    # message = message
 
 
-    message = str(message.lower())
-    print(message)
+    if lastmessage:
+        message = lastmessage[-1].text
+        message = message.split()
+        message = message[:-2]
+        message = ' '.join(message)
+        message = str(message.lower())
+        print(message)
 
-    return message
+        return message
+    else:
+        unrecognised.send()
 
 
 def last_message():
@@ -183,68 +200,82 @@ def end():
 
 def send_message():
     if not last_message() == last2nd_message():
-        if last_message() == "hey":
-            question_1.send()
-        elif last2nd_message() == "are you ready ?" and last_message() == "yes":
-            question_2.send()
-        elif last2nd_message() == "are you ready ?" and last_message() == "no":
-            end()
+        if not funcs.stop:
+            if last_message() == "hey":
+                question_1.send()
+            elif last2nd_message() == "are you ready ?" and last_message() == "yes":
+                question_2.send()
+            elif last2nd_message() == "are you ready ?" and last_message() == "no":
+                end()
 
-        elif last2nd_message() == "are you already into affiliate marketing/web marketing?" and last_message() == "yes":
-            question_3.send()
-        elif last2nd_message() == "are you already into affiliate marketing/web marketing?" and last_message() == "no":
-            question_5.send()
-
-        # for answer to be yes----------------------------------------------------------
-        elif last2nd_message() == "4. i am not in affiliate marketing business":
-            if last_message() == "1" or last_message()== "2" or last_message() == "3":
-                question_4.send()
-            if last_message() == "4":
+            elif last2nd_message() == "are you already into affiliate marketing/web marketing?" and last_message() == "yes":
+                question_3.send()
+            elif last2nd_message() == "are you already into affiliate marketing/web marketing?" and last_message() == "no":
                 question_5.send()
 
-        elif last2nd_message() == "2. 75 % Plus":
-            if last_message() == "1" or last_message()== "2":
-                question_6.send()
+            # for answer to be yes----------------------------------------------------------
+            elif last2nd_message() == "4. i am not in affiliate marketing business":
+                if last_message() == "1" or last_message()== "2" or last_message() == "3":
+                    question_4.send()
+                if last_message() == "4":
+                    question_5.send()
+
+            elif last2nd_message() == "2. 75 % Plus":
+                if last_message() == "1" or last_message()== "2":
+                    question_6.send()
 
 
-        elif last2nd_message() == "yes or no":
-            if last_message() == "yes" or last_message()== "no":
-                question_7.send()
+            elif last2nd_message() == "yes or no":
+                if last_message() == "yes" or last_message()== "no":
+                    question_7.send()
 
-        elif last2nd_message() == "type yes" and last_message() == "yes":
-            question_12.send()
+            elif last2nd_message() == "type yes" and last_message() == "yes":
+                question_12.send()
 
-        # for answer to be no------------------------------------------------------------
-        elif last2nd_message() == "2. 20,000":
-            if last_message() == "1":
-                question_8.send_next()
-                question_9.send()
-            if last_message() == "2":
-                question_9.send()
-        elif last2nd_message() == "are you ready for that cha-ching sound of money? say yes" and last_message() == "yes":
-            question_10.send()
-        elif last2nd_message() == "however, if you work exactly according to our strategies you will make a very handsome amount. i promise. yes?" and last_message() == "yes":
-            question_11.send_next()
-            question_12.send()
-        elif last2nd_message() == "shall we go ahead? something interesting is waiting for you.yes?" and last_message() == "yes":
-            question_13.send()
-        elif last2nd_message() == "2. i want to see earning proofs":
-            if last_message() == "1":
+            # for answer to be no------------------------------------------------------------
+            elif last2nd_message() == "2. 20,000":
+                if last_message() == "1":
+                    question_8.send_next()
+                    question_9.send()
+                if last_message() == "2":
+                    question_9.send()
+            elif last2nd_message() == "are you ready for that cha-ching sound of money? say yes" and last_message() == "yes":
+                question_10.send()
+            elif last2nd_message() == "however, if you work exactly according to our strategies you will make a very handsome amount. i promise. yes?" and last_message() == "yes":
+                question_11.send_next()
+                question_12.send()
+            elif last2nd_message() == "shall we go ahead? something interesting is waiting for you.yes?" and last_message() == "yes":
+                question_13.send()
+            elif last2nd_message() == "2. i want to see earning proofs":
+                if last_message() == "1":
+                    question_14.send()
+                if last_message() == "2":
+                    send_image()
+            elif last2nd_message() == "courses with pricing" and last_message() == "yes" and last_message() == "yes":
                 question_14.send()
-            if last_message() == "2":
-                send_image()
-        elif last2nd_message() == "courses with pricing" and last_message() == "yes" and last_message() == "yes":
-            question_14.send()
 
 
+            # bot stop ----------------------------------------------------------------------------------
+            elif last_message() == "admin-stop":
+                stop_bot.send_next()
+                funcs.stop = True
 
-        else:
-            xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
-            input_box = driver.find_elements(By.XPATH, xpath_input)
-            input_box[0].send_keys("please type hey" + Keys.ENTER)
 
+            else:
+                unrecognised.send()
+
+                sleep(1)
+                get_element()
             sleep(1)
             get_element()
+
+        else:
+            if last_message() == "admin-start":
+                start_bot.send_next()
+                funcs.stop = False
+                get_element()
+            get_element()
+
     else:
         get_element()
 
