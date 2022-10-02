@@ -1,9 +1,30 @@
-
+import random
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-
+import schedule
+import time
+validity = 30
 stop = False
+valid_days = 1
+
+
+def genrate_code():
+    validity_code = int(random.randint(0,1000000000000))
+    return validity_code
+
+
+schedule.every(1).seconds.do()
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
+
+
+
+
+
 
 
 

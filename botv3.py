@@ -1,5 +1,5 @@
 import schedule
-
+import time
 import fuctions as funcs
 from selenium.webdriver import Keys
 from time import sleep
@@ -10,6 +10,15 @@ import os
 import sys
 
 sys.setrecursionlimit(10 ** 6)
+
+funcs.validity = 30
+
+
+def dec():
+    print("-ve")
+    funcs.validity -= 1
+
+
 
 options = Options()
 options.add_argument('--profile-directory=Profile 6')
@@ -144,6 +153,10 @@ start_bot = questions(message=
                       """
                        bot-started
                        """)
+validity = questions(message=
+                     """
+                       your validity is over please re subscribe
+                       """)
 
 
 def send_image():
@@ -273,7 +286,7 @@ def send_message():
                 question_14.send()
 
 
-# bot stop ----------------------------------------------------------------------------------
+            # bot stop ----------------------------------------------------------------------------------
             elif last_message() == "admin-stop":
                 stop_bot.send_next()
                 funcs.stop = True
@@ -296,18 +309,34 @@ def send_message():
 
 
 def get_element():
+    schedule.every(1).seconds.do(dec)
     # finding green dot
-    sleep(1)
-    greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
+    print(funcs.validity)
 
-    if (greendot):
-        greendot[-1].click()
+    if funcs.validity > 0:
         sleep(1)
-        send_message()
+        greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
+
+        if (greendot):
+            greendot[-1].click()
+            sleep(1)
+            send_message()
+        else:
+            sleep(1)
+            send_message()
     else:
-        sleep(1)
-        send_message()
+        print("out")
+        message = last_message().split('-')
+        message = message[1]
+
+        if message == code:
+            funcs.validity = int(message[2])
+
+        sleep(10)
+        get_element()
 
 
+code = funcs.genrate_code()
+print(code)
 get_element()
 sleep(2)
