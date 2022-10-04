@@ -5,6 +5,7 @@ from selenium.webdriver import Keys
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options
 import os
 import sys
@@ -20,18 +21,29 @@ def dec():
 
 
 
-options = Options()
-options.add_argument('--profile-directory=Profile 6')
-options.add_argument(
-    "user-data-dir=C:\\Users\\home\\AppData\\Local\\Google\\Chrome\\User Data\\")  # Path to your chrome profile
-driver = webdriver.Chrome(executable_path="C:\dev\chromedriver\chromedriver.exe", options=options)
+# options = Options()
+# options.add_argument('--profile-directory=Profile 6')
+# options.add_argument(
+#     "user-data-dir=C:\\Users\\home\\AppData\\Local\\Google\\Chrome\\User Data\\")  # Path to your chrome profile
+# driver = webdriver.Chrome(executable_path="C:\dev\firefoxdriver\geckodriver.exe", options=options)
+#
+# driver.get('https://web.whatsapp.com')
 
+# fp = webdriver.FirefoxProfile('/Users/<username>/Library/Application Support/Firefox/Profiles/')
+
+# options = Options()
+# options.add_argument('--profile-directory=Profile 6')
+# options.add_argument(
+#     "user-data-dir=C:\dev")
+fp = webdriver.FirefoxProfile(r'C:\Users\Home\AppData\Roaming\Mozilla\Firefox\Profiles\5p8s46q5.kamigo')
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install() , firefox_profile=fp)
 driver.get('https://web.whatsapp.com')
 
 input("enter")
 
 
 class questions():
+
     def __init__(self, message):
         self.message = message
 
@@ -215,62 +227,62 @@ def send_message():
     if not last_message() == last2nd_message():
         if not funcs.stop:
             if last_message() == "hey":
-                sleep(1)
+
                 question_1.send()
             elif last2nd_message() == "are you ready ?" and last_message() == "yes":
-                sleep(1)
+
                 question_2.send()
             elif last2nd_message() == "are you ready ?" and last_message() == "no":
                 end()
 
             elif last2nd_message() == "are you already into affiliate marketing/web marketing?" and last_message() == "yes":
-                sleep(1)
+
                 question_3.send()
             elif last2nd_message() == "are you already into affiliate marketing/web marketing?" and last_message() == "no":
-                sleep(1)
+
                 question_5.send()
 
             # for answer to be yes----------------------------------------------------------
             elif last2nd_message() == "4. i am not in affiliate marketing business":
                 if last_message() == "1" or last_message() == "2" or last_message() == "3":
-                    sleep(1)
+
                     question_4.send()
                 if last_message() == "4":
-                    sleep(1)
+
                     question_5.send()
 
             elif last2nd_message() == "2. 75 % plus":
                 if last_message() == "1" or last_message() == "2":
-                    sleep(1)
+
                     question_6.send()
 
             elif last2nd_message() == "yes or no":
                 if last_message() == "yes" or last_message() == "no":
-                    sleep(1)
+
                     question_7.send()
 
             elif last2nd_message() == "type yes" and last_message() == "yes":
-                sleep(1)
+
                 question_12.send()
 
             # for answer to be no------------------------------------------------------------
             elif last2nd_message() == "2. 20,000":
                 if last_message() == "1":
-                    sleep(1)
+
                     question_8.send_next()
                     question_9.send()
                 if last_message() == "2":
-                    sleep(1)
+
                     question_9.send()
             elif last2nd_message() == "are you ready for that cha-ching sound of money? say yes" and last_message() == "yes":
-                sleep(1)
+
                 question_10.send()
             elif last2nd_message() == "however, if you work exactly according to our strategies you will make a very handsome amount. i promise. yes?" and last_message() == "yes":
-                sleep(1)
+
                 question_11.send_next()
                 question_12.send()
             elif last2nd_message() == "shall we go ahead? something interesting is waiting for you.yes?" and last_message() == "yes":
-                sleep(1)
+
                 question_13.send()
             elif last2nd_message() == "2. i want to see earning proofs":
                 if last_message() == "1":
@@ -280,7 +292,7 @@ def send_message():
                     sleep(1)
                     send_image()
             elif last2nd_message() == "courses with pricing" and last_message() == "yes" and last_message() == "yes":
-                sleep(1)
+
                 question_14.send()
             elif last2nd_message() == "say yes to schedule call" and last_message() == "yes":
                 question_14.send()
@@ -292,7 +304,7 @@ def send_message():
                 funcs.stop = True
             else:
                 unrecognised.send()
-                sleep(1)
+
                 get_element()
             sleep(1)
             get_element()
@@ -309,25 +321,31 @@ def send_message():
 
 
 def get_element():
-    schedule.every(1).seconds.do(dec)
+
     # finding green dot
     print(funcs.validity)
 
     if funcs.validity > 0:
-        sleep(1)
-        greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
+        try:
+            sleep(1)
+            greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
 
-        if (greendot):
-            greendot[-1].click()
-            sleep(1)
-            send_message()
-        else:
-            sleep(1)
-            send_message()
+            if (greendot):
+                greendot[-1].click()
+                sleep(1)
+                send_message()
+            else:
+                sleep(1)
+                send_message()
+        except:
+            sleep(2)
+            get_element()
     else:
         print("out")
+        greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
+        greendot[-1].click()
         message = last_message().split('-')
-        message = message[1]
+        print(message)
 
         if message == code:
             funcs.validity = int(message[2])

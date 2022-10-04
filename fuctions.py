@@ -14,12 +14,6 @@ def genrate_code():
     return validity_code
 
 
-schedule.every(1).seconds.do()
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
-
 
 
 
