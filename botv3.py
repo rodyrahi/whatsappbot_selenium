@@ -19,6 +19,7 @@ sys.setrecursionlimit(10 ** 6)
 funcs.validity = 30
 
 contacts = []
+filepath = r'C:\Users\trivendra\PycharmProjects\whatsappbot'
 
 def dec():
     print("-ve")
@@ -28,7 +29,7 @@ def dec():
 options = Options()
 options.add_argument('--profile-directory=Person 1')
 options.add_argument(
-    "user-data-dir=C:\\Users\\home\\AppData\\Local\\Google\\Chrome\\User Data\\")  # Path to your chrome profile
+    "user-data-dir=C:\\Users\\trivendra\\AppData\\Local\\Google\\Chrome\\User Data\\")  # Path to your chrome profile
 driver = webdriver.Chrome(executable_path="C:\dev\chromedriver\chromedriver.exe", options=options)
 
 driver.get('https://web.whatsapp.com')
@@ -144,6 +145,8 @@ class questions():
             button.click()
 
 
+
+
 # def send_next(self):
 #         xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
 #         input_box = driver.find_elements(By.XPATH, xpath_input)
@@ -248,7 +251,11 @@ question_6b = questions(message=[
 
 ])
 question_7b = questions(message=[
-    'upi'
+    '''
+    Phonpe Gpay Paytm
+    Same number (8619202808)
+    Send me screenshot after payment 😊
+    '''
 ])
 
 silver_disadvantage = questions(message=[
@@ -363,22 +370,23 @@ def send_message():
 
                 elif last2nd_message() == question_5.message[-1].lower():
                     if last_message() == "1":
-                        send_file(r'F:\whatsappbot_selenium\voicemails\money_problem.ogg')
+                        send_file(filepath +r'\voicemails\money_problem.ogg')
                         question_4.send()
                     if last_message() == "2":
-                        send_file(r'F:\whatsappbot_selenium\voicemails\self_dout.ogg')
+                        send_file( filepath+r'\voicemails\self_dout.ogg')
                         question_4.send()
                     if last_message() == "3":
-                        send_file(r'F:\whatsappbot_selenium\voicemails\way_to_earn.ogg')
+                        print(filepath+r'\voicemails\way_to_earn.ogg')
+                        send_file(filepath+r'\voicemails\way_to_earn.ogg')
                         question_4.send()
                     if last_message() == "4":
                         question_6.send()
 
                 elif last2nd_message() == question_6.message[-1].lower():
                     if last_message() == "1" or last_message() == "2":
-                       # trust issue  ---------------------------------------
-                        send_file("voicemails/moneyproblem.ogg")
-                        presentation_video.send()
+                       # trust issue  --------------------------------------
+                        send_file(filepath+r'\voicemails\trust_issue.ogg')
+                        presentation_video.send_next()
                         question_2.send()
 
 
@@ -394,7 +402,7 @@ def send_message():
 
                 elif last2nd_message() == question_1b.message[-1].lower():
                     if last_message()=="1":
-                        send_file(r'F:\whatsappbot_selenium\voicemails\plat_pitch.ogg')
+                        send_file(filepath+r'\voicemails\plat_pitch.ogg')
                         question_2b.send()
                     if last_message() == "2":
                         question_2b.send()
@@ -416,8 +424,8 @@ def send_message():
                     if last_message() == "1":
                         question_4b.send()
                     if last_message() == "2":
-                        send_file("F:\whatsappbot_selenium\screenshots\gold_ss.jpeg")
-                        send_file("F:\whatsappbot_selenium\screenshots\plat_ss.jpeg")
+                        send_file(filepath+"\screenshots\gold_ss.jpeg")
+                        send_file(filepath+"\screenshots\plat_ss.jpeg")
                         question_4b.send()
                 elif last2nd_message() == question_4b.message[-1].lower() and last_message() == "yes":
                     if last_message() == "1":
