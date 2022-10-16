@@ -416,8 +416,8 @@ def send_message():
                     if last_message() == "1":
                         question_4b.send()
                     if last_message() == "2":
-                        send_file("voicemails/gold_ss.jpeg")
-                        send_file("voicemails/plat_ss.jpeg")
+                        send_file("F:\whatsappbot_selenium\screenshots\gold_ss.jpeg")
+                        send_file("F:\whatsappbot_selenium\screenshots\plat_ss.jpeg")
                         question_4b.send()
                 elif last2nd_message() == question_4b.message[-1].lower() and last_message() == "yes":
                     if last_message() == "1":
