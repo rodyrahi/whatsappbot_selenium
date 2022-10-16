@@ -1,5 +1,8 @@
 import schedule
 import time
+
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import contact_save
 import fuctions as funcs
 from selenium.webdriver import Keys
@@ -15,6 +18,7 @@ sys.setrecursionlimit(10 ** 6)
 
 funcs.validity = 30
 
+contacts = []
 
 def dec():
     print("-ve")
@@ -42,21 +46,24 @@ driver.get('https://web.whatsapp.com')
 input("enter")
 
 
+intro = ['hey', 'hello' , 'hi' , 'hii' , 'hola' , 'heyy' ]
+
 def element(url):
-    element = driver.find_element(By.XPATH , url)
+    element = driver.find_element(By.XPATH, url)
+
     return element
+
+
 
 def get_contact():
     contact = element('//*[@id="main"]/header/div[2]/div/div').text
-    contact = contact.split()
-    contact = contact[-2] + contact[-1]
-    contact_save.contacts = contact
-    if contact_save.new_contact():
-        driver.execute_script('''window.open("https://www.google.com", "_blank")''')
+    # contact = contact.split()
+    # contact = contact[-2] + contact[-1]
 
+    return contact
 
-
-
+    # if contact_save.new_contact():
+    #     driver.execute_script('''window.open("https://www.google.com", "_blank")''')
 
 
 def get_name_no():
@@ -64,7 +71,6 @@ def get_name_no():
     contact_url = '//*[@id="main"]/header/div[2]/div/div/span'
     name_url = '//*[@id="app"]/div/div/div[5]/span/div/span/div/div/section/div[1]/div[2]/div'
     close_url = '//*[@id="app"]/div/div/div[5]/span/div/span/div/header/div/div[1]/button'
-
 
     contact_box = driver.find_element(By.XPATH, contact_url)
     if contact_box:
@@ -86,111 +92,173 @@ def get_name_no():
 
     # print(name_box)
 
+
 class questions():
 
     def __init__(self, message):
         self.message = message
 
     def send(self):
-        xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
-        input_box = driver.find_elements(By.XPATH, xpath_input)
         for x in self.message:
-            sleep(1)
-            input_box[0].send_keys(x + Keys.ENTER)
+            xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
+            input_box = driver.find_elements(By.XPATH, xpath_input)
+            driver.execute_script(
+                f'''
+                          const text = `{x}`;
+                          const dataTransfer = new DataTransfer();
+                          dataTransfer.setData('text', text);
+                          const event = new ClipboardEvent('paste', {{
+                            clipboardData: dataTransfer,
+                            bubbles: true
+                          }});
+                          arguments[0].dispatchEvent(event)
+                          ''',
+                input_box[0])
+
+            b_xpath = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button'
+            button = driver.find_element(By.XPATH, b_xpath)
+            button.click()
+
         sleep(1)
         get_element()
-
     def send_next(self):
-        xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
-        input_box = driver.find_elements(By.XPATH, xpath_input)
         for x in self.message:
-            sleep(1)
-            input_box[0].send_keys(x + Keys.ENTER)
+            xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
+            input_box = driver.find_elements(By.XPATH, xpath_input)
+            driver.execute_script(
+                f'''
+                            const text = `{x}`;
+                            const dataTransfer = new DataTransfer();
+                            dataTransfer.setData('text', text);
+                            const event = new ClipboardEvent('paste', {{
+                              clipboardData: dataTransfer,
+                              bubbles: true
+                            }});
+                            arguments[0].dispatchEvent(event)
+                            ''',
+                input_box[0])
+            print("xxx")
+
+            b_xpath = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button'
+            button = driver.find_element(By.XPATH, b_xpath)
+            button.click()
 
 
+# def send_next(self):
+#         xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
+#         input_box = driver.find_elements(By.XPATH, xpath_input)
+#         for x in self.message:
+#             sleep(1)
+#             input_box[0].send_keys(x + Keys.ENTER)
 
+
+presentation_video = questions(message=[
+
+
+'How to earn upto 30000/-  to 40000/- per month from Social media',
+
+'😇 Work From Home 😇'
+
+'👇🏻👇🏻👇🏻'
+
+'PRESENTATION VIDEO'
+'https://youtu.be/PfJuuQJvGjM',
+
+'Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"'
+'😇',
+
+'My Instagram Handle 👇🏻'
+'https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=',
+
+
+"I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 hours everyday.",
+
+'So watch it till the very end and after you have watched the full video'
+
+"Message me I'd be happy to help you out! 😇",
+
+"Note: Message me within 24 hours otherwise I won't be able to help you out. I hope you value the given time. 🥰"
+
+])
 
 
 question_1 = questions(message=[
-    'Hey! Welcome to Leads Guru :)',
-    'Get ready to learn how to make money online with a few quick steps..',
-    'Hey I am Sugar :)',
-    "What's your name ? "
+    "Hey I'm Sugar "
 ])
 question_2 = questions(message=[
-    "That's Great!!",
-    "Are you already into Affiliate Marketing/Web marketing?"
+    "1. Interested",
+    "2. Not Interested"
 ])
 question_3 = questions(message=[
 
-    "That's Great! Which platform are you currently using?",
-    'To chose a Option use 1,2,3 or 4',
-    '1. BizGurukul',
-    '2. LeadsArk',
-    '3. Other',
-    '4. I am not in Affiliate Marketing Business'
+    "1. Did not watched the video",
+    '2. Did watched the video?',
+
 ])
 question_4 = questions(message=[
-    'Ok Great !',
-    'How much Commission you are getting on your Platform ?',
+    'Which Package?',
     'To chose a Option use 1,2',
-    '1. 50 % Plus',
-    '2. 75 % Plus'
+    '1. Start Directly',
+    '2. I have a query'
 ])
 question_5 = questions(message=[
-    'No worries, before we go ahead let me ask you which is a greater figure?',
     'To chose a Option use "1" or "2"',
-    '1. 10,000',
-    '2. 20,000'
+    '1. I have Money Problem',
+    '2. Self Doubt',
+    '3. How to Earn Through Leads Guru?',
+    '4. Trust Issue'
 ])
 question_6 = questions(message=[
-    "That's Very less.. ",
-    'Do you get total commission, daily in your bank account ?',
-    'YES or NO'
+    "1. Trust Issue With Me?",
+    '2. Trust Issue with Company',
+
 ])
 question_7 = questions(message=[
-    'Do you Know? Your platform is taking advantage of your hard work.',
-    'Leads Guru is giving More than 90% commission to its affiliate with Daily withdrawal.',
-    'Are you Excited to start Affiliate  Marketing with LeadsGuru ?',
-    'Type YES'
+    'I have limited slots',
+    '1. Start Directly',
+    '2. I have a query',
+    '3. Ok will Confirm Tommorow'
 ])
-question_8 = questions(message=[
-    'Are you sure 10,000 is greater than 20,000?'
+question_1b = questions(message=[
+    '1. Gold Pakage',
+    '2. Platinum'
 ])
-question_9 = questions(message=[
-    'Well, you know what? I can help you Earn that greater figure of 20,000 within a week? JOKES APART!',
-    'Are you ready for that cha-ching sound of money? Say YES'
+question_2b = questions(message=[
+    'How would you like to pay?',
+    '1. pay me',
+    '2. Affliate link',
+    '3. Money Problem'
 ])
-question_10 = questions(message=[
-    'Now! PLEASE NOTE that this is not a get-rich-quick scheme or a magic pill.',
-    'However, if you work exactly according to our strategies you will make a very handsome amount. I promise. YES?'
+question_3b = questions(message=[
+    '1. Will Arrange my money',
+    '2. I want to Start with SILVER'
 ])
-question_11 = questions(message=[
-    'So, Affiliate marketing is an Online business in which anyone can promote or recommend products and earn commissions based on their sales.'
+question_4b = questions(message=[
+    '1. Give me more time ',
+    '2. Gold '
+    '3. Silver'
 ])
-question_12 = questions(message=[
-    'But why you need to start Affiliate Marketing with Leads Guru ?',
-    'You will get :',
-    '-90% Commission',
-    '-Same Day Payout',
-    '-2 Tier Passive Income',
-    '-You DO NOT need to Create Product',
-    '-Valuable Courses to Upgrade Skills',
-    'Shall we go ahead? Something interesting is waiting for you.YES?'
+question_5b = questions(message=[
+    '1. Platinum',
+    '2. Gold ',
+    '3. Silver',
 ])
-question_13 = questions(message=[
-    'Leads Guru is one of the best Platform That Provides multiple Premium Courses and An Opportunity To Become financial Free by Joining as affiliate.',
-    '1. I would like to know about the courses.',
-    '2. I want to see Earning Proofs'
+question_6b = questions(message=[
+    'Payment ins',
+
 ])
-question_14 = questions(message=[
-    'Make a call on 99999999'
+question_7b = questions(message=[
+    'upi'
 ])
-question_15 = questions(message=[
-    'Like to know about the courses.',
-    'Courses with Pricing',
-    'Say YES to Schedule call'
+
+silver_disadvantage = questions(message=[
+'''
+Silver lite course hai
+Jada kuch seekhne ko bhi nahi milega
+Commission bhi kam hai
+And you won't be able to attend my mentorship sessions in silver'''
 ])
+
 unrecognised = questions(message=[
     'Please Type "Hey" to get Started!',
 ])
@@ -209,14 +277,7 @@ question_2a = questions(message=[
 ])
 
 
-
-
-
-
-
-
-def send_image():
-    filepath = r'C:\Users\Home\Desktop\WhatsApp Ptt 2022-10-12 at 10.18.56 PM.ogg'
+def send_file(filepath):
     image_url = '/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/div/ul/li[1]/button/input'
     attach_url = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div'
     send_button_url = '/html/body/div[1]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div'
@@ -228,7 +289,8 @@ def send_image():
     send_button = driver.find_element(By.XPATH, send_button_url)
     send_button.click()
     sleep(1)
-    question_15.send()
+
+    # question_15.send()
 
 
 def last2nd_message():
@@ -268,107 +330,122 @@ def end():
 
 
 def send_message():
-    get_contact()
+    print(contacts)
+    # get_contact()
     if not last_message() == last2nd_message():
         if not funcs.stop:
-            if last_message() == "hey":
+            if not get_contact() in contacts:
+                if last_message() in intro:
 
-                funcs.fill = True
 
-                question_1.send()
 
-            elif last2nd_message() == question_1.message[-1].lower():
-                if last_message():
-                    question_2a.send_next()
-
-            elif last2nd_message() == question_2a.message[-1].lower():
-                if last_message():
-                    funcs.fill = False
+                    question_1.send_next()
+                    presentation_video.send_next()
                     question_2.send()
+                elif last2nd_message() == question_2.message[-1].lower():
+                    if last_message() ==  "1":
+                        question_3.send()
+                    if last_message() == "2":
+                        end()
+
+
+                elif last2nd_message() == question_3.message[-1].lower():
+                    if last_message()=="1":
+                        presentation_video.send_next()
+                        question_7.send()
+                    if last_message() =="2":
+                        question_4.send()
+                elif last2nd_message() == question_4.message[-1].lower():
+                    if last_message() == "1":
+                        question_1b.send()
+                    if last_message() == "2":
+                        question_5.send()
+
+                elif last2nd_message() == question_5.message[-1].lower():
+                    if last_message() == "1":
+                        send_file(r'F:\whatsappbot_selenium\voicemails\money_problem.ogg')
+                        question_4.send()
+                    if last_message() == "2":
+                        send_file(r'F:\whatsappbot_selenium\voicemails\self_dout.ogg')
+                        question_4.send()
+                    if last_message() == "3":
+                        send_file(r'F:\whatsappbot_selenium\voicemails\way_to_earn.ogg')
+                        question_4.send()
+                    if last_message() == "4":
+                        question_6.send()
+
+                elif last2nd_message() == question_6.message[-1].lower():
+                    if last_message() == "1" or last_message() == "2":
+                       # trust issue  ---------------------------------------
+                        send_file("voicemails/moneyproblem.ogg")
+                        presentation_video.send()
+                        question_2.send()
 
 
 
+                # section-2 -----------------------------------------------------------------
+                elif last2nd_message() == question_7.message[-1].lower():
+                    if last_message() == "1":
+                        question_1b.send()
+                    if  last_message() == "2":
+                        question_5.send()
+                    if last_message()=="3":
+                        unrecognised.send()
 
-            elif last2nd_message() == question_2.message[-1].lower():
-                if last_message() == "yes":
-                    question_3.send()
-                if last_message() == "no":
-                    question_5.send()
+                elif last2nd_message() == question_1b.message[-1].lower():
+                    if last_message()=="1":
+                        send_file(r'F:\whatsappbot_selenium\voicemails\plat_pitch.ogg')
+                        question_2b.send()
+                    if last_message() == "2":
+                        question_2b.send()
+                    # question_12.send()
 
-            elif last2nd_message() == question_10.message[-1].lower():
-                if last_message() == "yes":
-                    question_11.send_next()
-                    question_12.send()
+                # payment------------------------------------------------------------
+                elif last2nd_message() == question_2b.message[-1].lower():
+                    if last_message() == "1":
+                        question_7b.send_next()
+                        contacts.append(get_contact())
+                        get_element()
 
-
-            # for answer to be yes----------------------------------------------------------
-            elif last2nd_message() == question_3.message[-1].lower():
-                if last_message() == "1" or last_message() == "2" or last_message() == "3":
-                    question_4.send()
-                if last_message() == "4":
-                    question_5.send()
-
-            elif last2nd_message() == question_4.message[-1].lower():
-                if last_message() == "1" or last_message() == "2":
-                    question_6.send()
-
-            elif last2nd_message() == question_6.message[-1].lower():
-                if last_message() == "yes" or last_message() == "no":
-                    question_7.send()
-
-            elif last2nd_message() == "type yes" and last_message() == "yes":
-
-                question_12.send()
-
-            # for answer to be no------------------------------------------------------------
-            elif last2nd_message() == question_5.message[-1].lower():
-                if last_message() == "1":
-                    question_8.send_next()
-                    question_9.send()
-                if last_message() == "2":
-                    question_9.send()
-            elif last2nd_message() == question_9.message[-1].lower():
-                if last_message() == "yes":
-                    question_10.send()
-                if last_message() == "no":
-                    question_11.send_next()
-                    question_12.send()
-
-            elif last2nd_message() == question_12.message[-1].lower() and last_message() == "yes":
-                question_13.send()
-            elif last2nd_message() == question_13.message[-1].lower():
-                if last_message() == "1":
-                    sleep(1)
-                    question_14.send()
-                if last_message() == "2":
-                    sleep(1)
-                    send_image()
-            # elif last2nd_message() == "courses with pricing" and last_message() == "yes" and last_message() == "yes":
-            #
-            #     question_14.send()
-            elif last2nd_message() == question_15.message[-1].lower() and last_message() == "yes":
-                question_14.send()
+                    if last_message() == "2":
+                        question_6b.send()
+                    if last_message() == "3":
+                        question_3b.send()
+                        # question_9.send()
+                elif last2nd_message() == question_3b.message[-1].lower():
+                    if last_message() == "1":
+                        question_4b.send()
+                    if last_message() == "2":
+                        send_file("voicemails/gold_ss.jpeg")
+                        send_file("voicemails/plat_ss.jpeg")
+                        question_4b.send()
+                elif last2nd_message() == question_4b.message[-1].lower() and last_message() == "yes":
+                    if last_message() == "1":
+                        question_7.send()
+                    if last_message() == "2":
+                        question_2b.send()
+                    if last_message() =="3":
+                        silver_disadvantage.send_next()
+                        question_5b.send()
+                elif last2nd_message() == question_5b.message[-1].lower():
+                    if last_message() == "1" or last_message() == "2" or last_message() =="3":
+                        question_2b.send()
 
 
-            # bot stop ----------------------------------------------------------------------------------
-            elif last_message() == "admin-stop":
-                stop_bot.send_next()
-                funcs.stop = True
-            else:
-                print(funcs.fill)
-                if funcs.fill:
-                    print("fill")
 
-
-                    question_2a.send()
-                    # elif last2nd_message() == question_2a.message[-1].lower():
-                    #     question_2.send()
-                if not funcs.fill:
+                # bot stop ----------------------------------------------------------------------------------
+                elif last_message() == "admin-stop":
+                    stop_bot.send_next()
+                    funcs.stop = True
+                else:
                     unrecognised.send()
                     get_element()
 
-            sleep(1)
-            get_element()
+                sleep(1)
+                get_element()
+            else:
+                sleep(1)
+                get_element()
 
         else:
             if last_message() == "admin-start":

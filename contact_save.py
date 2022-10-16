@@ -2,7 +2,7 @@
 import csv
 from datetime import date
 
-contacts = '9827688768'
+contacts = ["", "y"]
 
 filename = "contacts.csv"
 
