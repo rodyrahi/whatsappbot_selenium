@@ -49,6 +49,21 @@ input("enter")
 
 intro = ['hey', 'hello' , 'hi' , 'hii' , 'hola' , 'heyy' ]
 
+
+def Schedulecall():
+    try:
+        url = 'https://web.whatsapp.com/send?phone=+918109204371+&text='+get_contact()
+        driver.get(url)
+        sleep(3)
+        click_btn = driver.find_element(By.XPATH,
+                                        '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button')
+        click_btn.click()
+        get_element()
+    except:
+        sleep(1)
+        get_element()
+
+
 def element(url):
     element = driver.find_element(By.XPATH, url)
 
@@ -67,29 +82,6 @@ def get_contact():
     #     driver.execute_script('''window.open("https://www.google.com", "_blank")''')
 
 
-def get_name_no():
-    # contact = element('//*[@id="main"]/header/div[2]/div/div').click()
-    contact_url = '//*[@id="main"]/header/div[2]/div/div/span'
-    name_url = '//*[@id="app"]/div/div/div[5]/span/div/span/div/div/section/div[1]/div[2]/div'
-    close_url = '//*[@id="app"]/div/div/div[5]/span/div/span/div/header/div/div[1]/button'
-
-    contact_box = driver.find_element(By.XPATH, contact_url)
-    if contact_box:
-        contact_box.click()
-        sleep(0.5)
-    name_box = driver.find_element(By.XPATH, name_url)
-    if name_box:
-        name_box = name_box.text
-        name_box = name_box.split()
-        name = name_box[0].split("~")[1]
-    close = driver.find_element(By.XPATH, close_url)
-    if close:
-        close.click()
-    if name:
-        return name
-    else:
-        name = "person"
-        return name
 
     # print(name_box)
 
@@ -115,10 +107,9 @@ class questions():
                           arguments[0].dispatchEvent(event)
                           ''',
                 input_box[0])
+            input_box[0].send_keys(Keys.ENTER)
 
-            b_xpath = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button'
-            button = driver.find_element(By.XPATH, b_xpath)
-            button.click()
+
 
         sleep(1)
         get_element()
@@ -138,11 +129,10 @@ class questions():
                             arguments[0].dispatchEvent(event)
                             ''',
                 input_box[0])
+            input_box[0].send_keys(Keys.ENTER)
             print("xxx")
 
-            b_xpath = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button'
-            button = driver.find_element(By.XPATH, b_xpath)
-            button.click()
+
 
 
 
@@ -158,27 +148,28 @@ class questions():
 presentation_video = questions(message=[
 
 
-'How to earn upto 30000/-  to 40000/- per month from Social media',
+"How to earn upto 30000/-  to 40000/- per month from Social media"
 
-'😇 Work From Home 😇'
+"😇 Work From Home 😇"
 
-'👇🏻👇🏻👇🏻'
+"👇🏻👇🏻👇🏻"
 
-'PRESENTATION VIDEO'
-'https://youtu.be/PfJuuQJvGjM',
+"PRESENTATION VIDEO"
+
+"https://youtu.be/PfJuuQJvGjM"
 
 'Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"'
-'😇',
+'😇'
 
 'My Instagram Handle 👇🏻'
-'https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=',
+'https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y='
 
 
 "I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 hours everyday.",
 
 'So watch it till the very end and after you have watched the full video'
 
-"Message me I'd be happy to help you out! 😇",
+"Message me I'd be happy to help you out! 😇"
 
 "Note: Message me within 24 hours otherwise I won't be able to help you out. I hope you value the given time. 🥰"
 
@@ -194,8 +185,9 @@ question_2 = questions(message=[
 ])
 question_3 = questions(message=[
 
-    "1. Did not watched the video",
-    '2. Did watched the video?',
+    "1. Did watched the video",
+    "2. Did not watched the video",
+
 
 ])
 question_4 = questions(message=[
@@ -220,11 +212,12 @@ question_7 = questions(message=[
     'I have limited slots',
     '1. Start Directly',
     '2. I have a query',
-    '3. Ok will Confirm Tommorow'
+    '3. Ok will Confirm Tomorrow'
 ])
 question_1b = questions(message=[
-    '1. Gold Pakage',
-    '2. Platinum'
+    '1. Platinum Package',
+    '2. Gold Package'
+
 ])
 question_2b = questions(message=[
     'How would you like to pay?',
@@ -238,7 +231,7 @@ question_3b = questions(message=[
 ])
 question_4b = questions(message=[
     '1. Give me more time ',
-    '2. Gold '
+    '2. Gold ',
     '3. Silver'
 ])
 question_5b = questions(message=[
@@ -247,15 +240,25 @@ question_5b = questions(message=[
     '3. Silver',
 ])
 question_6b = questions(message=[
-    'Payment ins',
+
+
+"https://leadsguru.in/?ref=Deepanshu29"
+"1. Open the above link in your browser." 
+'2. Click on "Get Started Now"'
+"3. Choose the course (Silver/Gold/Platinum)"
+'4. Click on "Buy Now"'
+"5. Fill all your details and take screenshot of username and password"
+'6. Click on "Instamojo" for UPI or card payment'
+"7. Send me screenshot after doing payment successfully 😊👍🏻"
 
 ])
 question_7b = questions(message=[
-    '''
-    Phonpe Gpay Paytm
-    Same number (8619202808)
-    Send me screenshot after payment 😊
-    '''
+
+
+    "Phonpe Gpay Paytm"
+    "Same number (8619202808)"
+    "Send me screenshot after payment 😊"
+
 ])
 
 silver_disadvantage = questions(message=[
@@ -264,6 +267,16 @@ Silver lite course hai
 Jada kuch seekhne ko bhi nahi milega
 Commission bhi kam hai
 And you won't be able to attend my mentorship sessions in silver'''
+])
+
+call = questions(message=[
+    '5. Schedule a Call'
+
+])
+
+Schedule_call = questions(message=[
+    'Your call has been Scheduled'
+    'You will be contacted Soon !!!'
 ])
 
 unrecognised = questions(message=[
@@ -278,10 +291,7 @@ start_bot = questions(message=[
 validity = questions(message=[
     'your validity is over please re subscribe'
 ])
-question_2a = questions(message=[
-    'Nice Meeting you Mate :) ',
-    'What do you Do ?'
-])
+
 
 
 def send_file(filepath):
@@ -337,15 +347,12 @@ def end():
 
 
 def send_message():
-    print(contacts)
     # get_contact()
     if not last_message() == last2nd_message():
         if not funcs.stop:
             if not get_contact() in contacts:
+                print(get_contact())
                 if last_message() in intro:
-
-
-
                     question_1.send_next()
                     presentation_video.send_next()
                     question_2.send()
@@ -358,15 +365,17 @@ def send_message():
 
                 elif last2nd_message() == question_3.message[-1].lower():
                     if last_message()=="1":
+                        question_4.send()
+
+                    if last_message() =="2":
                         presentation_video.send_next()
                         question_7.send()
-                    if last_message() =="2":
-                        question_4.send()
                 elif last2nd_message() == question_4.message[-1].lower():
                     if last_message() == "1":
                         question_1b.send()
                     if last_message() == "2":
-                        question_5.send()
+                        question_5.send_next()
+                        call.send()
 
                 elif last2nd_message() == question_5.message[-1].lower():
                     if last_message() == "1":
@@ -381,12 +390,18 @@ def send_message():
                         question_4.send()
                     if last_message() == "4":
                         question_6.send()
+                elif last2nd_message() == call.message[-1].lower():
+                    if last_message() == "5":
+                        Schedule_call.send_next()
+                        sleep(1)
+                        Schedulecall()
+
 
                 elif last2nd_message() == question_6.message[-1].lower():
                     if last_message() == "1" or last_message() == "2":
                        # trust issue  --------------------------------------
                         send_file(filepath+r'\voicemails\trust_issue.ogg')
-                        presentation_video.send_next()
+
                         question_2.send()
 
 
@@ -402,19 +417,18 @@ def send_message():
 
                 elif last2nd_message() == question_1b.message[-1].lower():
                     if last_message()=="1":
-                        send_file(filepath+r'\voicemails\plat_pitch.ogg')
                         question_2b.send()
                     if last_message() == "2":
+                        send_file(filepath+r'\voicemails\plat_pitch.ogg')
                         question_2b.send()
-                    # question_12.send()
+
 
                 # payment------------------------------------------------------------
                 elif last2nd_message() == question_2b.message[-1].lower():
                     if last_message() == "1":
-                        question_7b.send_next()
-                        contacts.append(get_contact())
-                        get_element()
-
+                        contact_save.insert_contact(get_contact())
+                        contact_save.contacts = get_contact()
+                        question_7b.send()
                     if last_message() == "2":
                         question_6b.send()
                     if last_message() == "3":
@@ -426,6 +440,7 @@ def send_message():
                     if last_message() == "2":
                         send_file(filepath+"\screenshots\gold_ss.jpeg")
                         send_file(filepath+"\screenshots\plat_ss.jpeg")
+                        sleep(1)
                         question_4b.send()
                 elif last2nd_message() == question_4b.message[-1].lower() and last_message() == "yes":
                     if last_message() == "1":
@@ -470,21 +485,33 @@ def get_element():
     # finding green dot
     print(funcs.validity)
 
+
     if funcs.validity > 0:
         try:
             sleep(1)
             greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
 
+            # if not elements() in contacts:
             if (greendot):
-                greendot[-1].click()
-                sleep(1)
+                parent = greendot[0].find_element(By.XPATH , "..").find_element(By.XPATH , "..").find_element(By.XPATH , "..").find_element(By.XPATH , "..")
+                parent = parent.text.split()
+                print(parent[0])
+                cont_check = contact_save.new_contact(parent[0])
 
-                send_message()
+                if cont_check:
 
-                # get_name_no()
+                    greendot[-1].click()
+                    sleep(1)
+                    send_message()
+                else:
+                    sleep(1)
+                    send_message()
             else:
                 sleep(1)
                 send_message()
+            # else:
+            #     sleep(1)
+            #     get_element()
         except:
             sleep(2)
             get_element()

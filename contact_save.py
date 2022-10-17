@@ -12,10 +12,10 @@ def insert_contact(cont):
     input = cont +':'+ str(date.today())
     print(input)
     # rows = [cont +'-'+ date.today() , cont]
-    rows = [input ,str(cont)]
+    rows = [str(cont)]
 
     # writing to csv file
-    with open(filename, 'w') as csvfile:
+    with open(filename, 'a',newline='') as csvfile:
         # creating a csv writer object
         csvwriter = csv.writer(csvfile)
 
@@ -23,20 +23,20 @@ def insert_contact(cont):
         csvwriter.writerow(rows)
 
 
-def new_contact():
-    print(contacts)
-    with open(filename, newline='') as f:
+def new_contact(cont):
+
+    with open(filename, 'r',newline='') as f:
 
         reader = csv.reader(f)
         for row in reader:
 
-            contact = contacts
 
-            if not row[-1] == contact or not row[-1] == "Phone":
 
-                insert_contact(contact)
+            if cont == row:
+                print(row)
+                return False
             else:
-                print( "else",row , contact)
+                return True
 
 
 
