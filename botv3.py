@@ -50,14 +50,13 @@ input("enter")
 intro = ['hey', 'hello' , 'hi' , 'hii' , 'hola' , 'heyy' ]
 
 
-def Schedulecall():
+def Schedulecall(message):
     try:
-        url = 'https://web.whatsapp.com/send?phone=+918109204371+&text='+get_contact()
+        url = 'https://web.whatsapp.com/send?phone=+918109204371+&text='+get_contact()+' ' + message
         driver.get(url)
-        sleep(3)
-        click_btn = driver.find_element(By.XPATH,
-                                        '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button')
-        click_btn.click()
+        sleep(10)
+        click_btn = driver.find_element(By.XPATH,'//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(Keys.ENTER)
+        sleep(1)
         get_element()
     except:
         sleep(1)
@@ -148,30 +147,32 @@ class questions():
 presentation_video = questions(message=[
 
 
-"How to earn upto 30000/-  to 40000/- per month from Social media"
+'''How to earn upto 30000/-  to 40000/- per month from Social media
 
-"😇 Work From Home 😇"
+😇 Work From Home 😇
 
-"👇🏻👇🏻👇🏻"
+👇🏻👇🏻👇🏻
 
-"PRESENTATION VIDEO"
+PRESENTATION VIDEO
 
-"https://youtu.be/PfJuuQJvGjM"
+https://youtu.be/PfJuuQJvGjM
 
-'Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"'
-'😇'
+Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"
+😇
 
-'My Instagram Handle 👇🏻'
-'https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y='
+My Instagram Handle 👇🏻
+https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=''',
 
 
-"I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 hours everyday.",
+'''I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 hours everyday.
 
-'So watch it till the very end and after you have watched the full video'
+So watch it till the very end and after you have watched the full video
 
-"Message me I'd be happy to help you out! 😇"
+Message me I'd be happy to help you out! 😇
 
-"Note: Message me within 24 hours otherwise I won't be able to help you out. I hope you value the given time. 🥰"
+Note: Message me within 24 hours otherwise I won't be able to help you out. I hope you value the given time. 🥰
+'''
+
 
 ])
 
@@ -180,28 +181,39 @@ question_1 = questions(message=[
     "Hey I'm Sugar "
 ])
 question_2 = questions(message=[
-    "1. Interested",
-    "2. Not Interested"
+
+   '1. INTERESTED',
+   '2. NOT INTERESTED'
+
+
+
+
 ])
 question_3 = questions(message=[
 
-    "1. Did watched the video",
-    "2. Did not watched the video",
+    '1. Did watched the video',
+    '2. Did not watched the video'
+
 
 
 ])
 question_4 = questions(message=[
     'Which Package?',
     'To chose a Option use 1,2',
+
     '1. Start Directly',
     '2. I have a query'
+
+
 ])
 question_5 = questions(message=[
     'To chose a Option use "1" or "2"',
+
     '1. I have Money Problem',
     '2. Self Doubt',
     '3. How to Earn Through Leads Guru?',
-    '4. Trust Issue'
+    '4. Trust Issue',
+    '5 . Call'
 ])
 question_6 = questions(message=[
     "1. Trust Issue With Me?",
@@ -374,8 +386,8 @@ def send_message():
                     if last_message() == "1":
                         question_1b.send()
                     if last_message() == "2":
-                        question_5.send_next()
-                        call.send()
+                        question_5.send()
+
 
                 elif last2nd_message() == question_5.message[-1].lower():
                     if last_message() == "1":
@@ -390,11 +402,12 @@ def send_message():
                         question_4.send()
                     if last_message() == "4":
                         question_6.send()
-                elif last2nd_message() == call.message[-1].lower():
                     if last_message() == "5":
                         Schedule_call.send_next()
                         sleep(1)
-                        Schedulecall()
+                        Schedulecall('wants to talk to you ')
+
+
 
 
                 elif last2nd_message() == question_6.message[-1].lower():
@@ -428,7 +441,10 @@ def send_message():
                     if last_message() == "1":
                         contact_save.insert_contact(get_contact())
                         contact_save.contacts = get_contact()
-                        question_7b.send()
+
+                        question_7b.send_next()
+                        sleep(1)
+                        Schedulecall('lead is ready to pay ')
                     if last_message() == "2":
                         question_6b.send()
                     if last_message() == "3":
@@ -442,8 +458,9 @@ def send_message():
                         send_file(filepath+"\screenshots\plat_ss.jpeg")
                         sleep(1)
                         question_4b.send()
-                elif last2nd_message() == question_4b.message[-1].lower() and last_message() == "yes":
+                elif last2nd_message() == question_4b.message[-1].lower():
                     if last_message() == "1":
+
                         question_7.send()
                     if last_message() == "2":
                         question_2b.send()
