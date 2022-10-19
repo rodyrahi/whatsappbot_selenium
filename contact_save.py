@@ -9,8 +9,9 @@ filename = "contacts.csv"
 
 
 def insert_contact(cont):
-    input = cont +':'+ str(date.today())
-    print(input)
+    print("insert")
+
+
     # rows = [cont +'-'+ date.today() , cont]
     rows = [str(cont)]
 
@@ -24,22 +25,22 @@ def insert_contact(cont):
 
 
 def new_contact(cont):
-
-    with open(filename, 'r',newline='') as f:
+    print(cont)
+    with open(filename, 'r' ,newline='') as f:
 
         reader = csv.reader(f)
         for row in reader:
 
 
 
-            if cont == row:
-                print(row)
+            if str(cont) == row:
+
                 return False
             else:
-                return True
+                continue
 
 
-
+        return True
 
 
 
