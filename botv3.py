@@ -1,6 +1,6 @@
 import schedule
 import time
-
+import _options as opt
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import contact_save
@@ -78,17 +78,11 @@ def element(url):
 
 def get_contact():
     contact = element('//*[@id="main"]/header/div[2]/div/div').text
-    contact = contact.split()
-    contact = contact[0]
+    # contact = contact.split()
+    # contact = contact[-2] + contact[-1]
 
     return contact
 
-    # if contact_save.new_contact():
-    #     driver.execute_script('''window.open("https://www.google.com", "_blank")''')
-
-
-
-    # print(name_box)
 
 
 class questions():
@@ -205,13 +199,16 @@ question_3 = questions(message=[
 ])
 question_4 = questions(message=[
     'SELECT A PACKAGE',
-    'To chose a Option use 1,2',
+    'To chose a Option use 1 , 2 , 3 OR 4 ',
     '1. PLATINUM PACKAGE - 9997',
     '2. GOLD PACKAGE - 4130',
-    '3. I HAVE A QUERY'
+    '3. I HAVE A QUERY',
+    '4. I HAVE MONEY PROBLEM'
+
 
 
 ])
+
 question_5 = questions(message=[
     'To chose a Option use 1 , 2 , 3 ,4 or 5',
 
@@ -253,8 +250,9 @@ question_3b = questions(message=[
     '2. I WANT TO START WITH SILVER'
 ])
 question_4b = questions(message=[
+
     '1. GOLD PACKAGE - 4130',
-    '2. SILVER PACKAGE - 2299'
+    '2. SILVER PACKAGE - 2299',
     '3. I NEED MORE TIME'
 
 ])
@@ -280,19 +278,31 @@ question_6b = questions(message=[
 ])
 question_7b = questions(message=[
 
+    '''
+    Phonpe Gpay Paytm
+    Same number (8619202808)
+    Send me screenshot after payment 😊
+    '''
 
-    "Phonpe Gpay Paytm"
-    "Same number (8619202808)"
-    "Send me screenshot after payment 😊"
+])
+continue_with_gs  = questions(message=[
+
+
+    "DO YOU STILL WANT TO CONTINUE WITH GOLD AND SILVER? ",
+    "1. YES",
+    "2. NO"
 
 ])
 
+
 silver_disadvantage = questions(message=[
 '''
-Silver lite course hai
-Jada kuch seekhne ko bhi nahi milega
-Commission bhi kam hai
-And you won't be able to attend my mentorship sessions in silver'''
+    Silver lite course hai
+    Jada kuch seekhne ko bhi nahi milega
+    Commission bhi kam hai
+    And you won't be able to attend my mentorship sessions in silver
+    
+'''
 ])
 
 call = questions(message=[
@@ -376,7 +386,7 @@ def send_message():
     # get_contact()
     if not last_message() == last2nd_message():
         if not funcs.stop:
-            if not get_contact() in contacts:
+            if not contact_save.new_contact(get_contact()):
                 print(get_contact())
                 if last_message() in intro:
                     question_1.send_next()
@@ -403,7 +413,8 @@ def send_message():
                         question_2b.send()
                     if last_message() == "3":
                         question_5.send()
-
+                    if last_message() == "4":
+                        question_3b.send()
 
                 elif last2nd_message() == question_5.message[-1].lower():
                     if last_message() == "1":
@@ -480,7 +491,15 @@ def send_message():
                         send_file(filepath+"\screenshots\gold_ss.jpeg")
                         send_file(filepath+"\screenshots\plat_ss.jpeg")
                         sleep(1)
-                        question_4b.send()
+                        send_file(filepath + r'\voicemails\plat_pitch.ogg')
+
+                        sleep(2)
+                        continue_with_gs.send()
+                elif last2nd_message() == continue_with_gs.message[-1].lower():
+                        if last_message() == "1":
+                            question_4b.send()
+                        if last_message() == "2":
+                            question_5b.send()
                 elif last2nd_message() == question_4b.message[-1].lower():
                     if last_message() == "1":
                         question_2b.send()
@@ -537,9 +556,10 @@ def get_element():
                 parent = parent.text.split()
                 print(parent[0])
                 cont_check = contact_save.new_contact(parent[0])
+
                 print(cont_check)
 
-                if cont_check:
+                if not cont_check:
 
                     greendot[-1].click()
                     sleep(1)
@@ -571,6 +591,7 @@ def get_element():
 
 
 code = funcs.genrate_code()
-print(code)
+
 get_element()
+print(opt._option(last_message() , last2nd_message()))
 sleep(1)
