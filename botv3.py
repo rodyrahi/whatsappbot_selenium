@@ -1,6 +1,6 @@
 import schedule
 import time
-import _options as opt
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import contact_save
@@ -219,8 +219,8 @@ question_5 = questions(message=[
     '5. SCHEDULE A CALL "it might take a while"'
 ])
 question_6 = questions(message=[
-    "1. TRUST ISSUE WITH ME ?",
-    '2. TRUST ISSUE WITH LEADS GURU ',
+    '1. TRUST ISSUE WITH ME ?',
+    '2. TRUST ISSUE WITH LEADS GURU'
 
 ])
 question_7 = questions(message=[
@@ -236,7 +236,7 @@ question_7 = questions(message=[
 ])
 question_1b = questions(message=[
     '1. PLATINUM PACKAGE - 9997',
-    '2. GOLD PACKAGE - 4130',
+    '2. GOLD PACKAGE - 4130'
 
 ])
 question_2b = questions(message=[
@@ -438,14 +438,12 @@ def send_message():
                         Schedulecall('wants to talk to you ')
 
 
-
-
                 elif last2nd_message() == question_6.message[-1].lower():
                     if last_message() == "1" or last_message() == "2":
+                        print("queation 2")
                        # trust issue  --------------------------------------
                         send_file(filepath+r'\voicemails\trust_issue.ogg')
                         sleep(1)
-
                         question_2.send()
 
 
@@ -593,5 +591,5 @@ def get_element():
 code = funcs.genrate_code()
 
 get_element()
-print(opt._option(last_message() , last2nd_message()))
+# print(opt._option(last_message() , last2nd_message()))
 sleep(1)
