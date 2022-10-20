@@ -8,7 +8,7 @@ validity = 30
 stop = False
 fill = False
 valid_days = 1
-
+current_question = []
 
 def genrate_code():
     validity_code = int(random.randint(0,1000000000000))

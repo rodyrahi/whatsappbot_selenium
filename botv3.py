@@ -298,7 +298,7 @@ Schedule_call = questions(message=[
 ])
 
 unrecognised = questions(message=[
-    "PLEASE TYPE '1' , '2'  , '3' ... ",
+    "PLEASE TYPE TYPE A CORRECT A OPTION",
 ])
 stop_bot = questions(message=[
     'Bot is stopped'
@@ -313,7 +313,7 @@ admin_commands = questions(message=[
     'you are admin'
 ])
 
-
+current_question = question_1
 def send_file(filepath):
     image_url = '/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/div/ul/li[1]/button/input'
     attach_url = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div'
@@ -385,6 +385,7 @@ def send_message():
                         sleep(1)
                         question_2.send()
                 elif last2nd_message() == admin_commands.message[-1].lower():
+
                     if "single-stop" in last_message():
                         message = str(last_message()).split()
                         message = message[0]
@@ -397,15 +398,18 @@ def send_message():
                         print(message)
 
                 elif last2nd_message() == question_2.message[-1].lower():
+                    funcs.current_question = question_2
                     if last_message() == "1":
                         question_3.send()
                     elif last_message() == "2":
                         end()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_2.send()
 
 
                 elif last2nd_message() == question_3.message[-1].lower():
+                    funcs.current_question = question_3
                     if last_message() == "1":
                         question_4.send()
 
@@ -413,8 +417,10 @@ def send_message():
                         presentation_video.send_next()
                         question_7.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_3.send()
                 elif last2nd_message() == question_4.message[-1].lower():
+                    funcs.current_question = question_4
                     if last_message() == "1":
                         question_2b.send()
                     elif last_message() == "2":
@@ -424,9 +430,11 @@ def send_message():
                     elif last_message() == "4":
                         question_3b.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_4.send()
 
                 elif last2nd_message() == question_5.message[-1].lower():
+                    funcs.current_question = question_5
                     if last_message() == "1":
                         send_file(filepath + r'\voicemails\money_problem.ogg')
                         sleep(1)
@@ -444,14 +452,17 @@ def send_message():
                     elif last_message() == "5":
                         call.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_5.send()
                 elif last2nd_message() == call.message[-1].lower():
+                    funcs.current_question = call
                     Schedule_call.send_next()
                     sleep(1)
                     Schedulecall('wants to talk to you ')
 
 
                 elif last2nd_message() == question_6.message[-1].lower():
+                    funcs.current_question = question_6
                     if last_message() == "1" or last_message() == "2":
                         print("queation 2")
                         # trust issue  --------------------------------------
@@ -460,12 +471,14 @@ def send_message():
                         sleep(1)
                         question_2.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_6.send()
 
 
 
                 # section-2 -----------------------------------------------------------------
                 elif last2nd_message() == question_7.message[-1].lower():
+                    funcs.current_question = question_7
                     if last_message() == "1":
                         question_2b.send()
                     elif last_message() == "2":
@@ -476,20 +489,23 @@ def send_message():
                         question_5.send()
                     elif last_message() == "4":
                         question_2.send()
-                    else:
-                        unrecognised.send()
+                        question_7.send()
+
                 elif last2nd_message() == question_1b.message[-1].lower():
+                    funcs.current_question = question_1b
                     if last_message() == "1":
                         question_2b.send()
                     elif last_message() == "2":
                         # send_file(filepath+r'\voicemails\plat_pitch.ogg')
                         question_2b.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_1b.send()
 
 
                 # payment------------------------------------------------------------
                 elif last2nd_message() == question_2b.message[-1].lower():
+                    funcs.current_question = question_2b
                     if last_message() == "1":
                         print("ready")
                         contact_save.insert_contact(get_contact())
@@ -505,8 +521,10 @@ def send_message():
                         question_3b.send()
                         # question_9.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_2b.send()
                 elif last2nd_message() == question_3b.message[-1].lower():
+                    funcs.current_question = question_3b
                     if last_message() == "1":
                         question_4b.send()
                     elif last_message() == "2":
@@ -518,15 +536,19 @@ def send_message():
                         sleep(2)
                         continue_with_gs.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_3b.send()
                 elif last2nd_message() == continue_with_gs.message[-1].lower():
+                    funcs.current_question = continue_with_gs
                     if last_message() == "1":
                         question_4b.send()
                     elif last_message() == "2":
                         question_5b.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        continue_with_gs.send()
                 elif last2nd_message() == question_4b.message[-1].lower():
+                    funcs.current_question = question_4
                     if last_message() == "1":
                         question_2b.send()
                     elif last_message() == "2":
@@ -535,13 +557,16 @@ def send_message():
                     elif last_message() == "3":
                         question_7.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_4b.send()
 
                 elif last2nd_message() == question_5b.message[-1].lower():
+                    funcs.current_question = question_5b
                     if last_message() == "1" or last_message() == "2" or last_message() == "3":
                         question_2b.send()
                     else:
-                        unrecognised.send()
+                        unrecognised.send_next()
+                        question_5b.send()
 
 
 
@@ -552,10 +577,13 @@ def send_message():
                     stop_bot.send_next()
                     funcs.stop = True
                 else:
-                    question_1.send_next()
-                    presentation_video.send_next()
-                    sleep(1)
-                    question_2.send()
+                    if last2nd_message() not in questions:
+                        question_1.send_next()
+                        presentation_video.send_next()
+                        sleep(1)
+                        question_2.send()
+                    else:
+                        funcs.current_question[0].send()
 
                 sleep(1)
                 get_element()
