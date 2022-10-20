@@ -216,7 +216,7 @@ question_5 = questions(message=[
     '2. SELF DOUBT',
     '3. HOW TO EARN THROUGH LEADS GURU?',
     '4. TRUST ISSUE',
-    '5. SCHEDULE A CALL "it might take a while"'
+    '5. I HAVE ANOTHER QUERY'
 ])
 question_6 = questions(message=[
     '1. TRUST ISSUE WITH ME ?',
@@ -306,7 +306,7 @@ silver_disadvantage = questions(message=[
 ])
 
 call = questions(message=[
-    '5. Schedule a Call'
+    '1. SCHEDULE A CALL "it might take a while"'
 
 ])
 
@@ -326,6 +326,9 @@ start_bot = questions(message=[
 ])
 validity = questions(message=[
     'your validity is over please re subscribe'
+])
+admin_commands = questions(message=[
+    'you are admin'
 ])
 
 
@@ -389,9 +392,28 @@ def send_message():
             if not contact_save.new_contact(get_contact()):
                 print(get_contact())
                 if last_message() in intro:
-                    question_1.send_next()
-                    presentation_video.send_next()
-                    question_2.send()
+                    if get_contact() == "Rajvendra":
+                        # bot stop for a single user-----------------------------------------------------------
+                        admin_commands.send()
+                        print(last_message())
+
+
+                    else:
+                        question_1.send_next()
+                        presentation_video.send_next()
+                        question_2.send()
+                elif last2nd_message() == admin_commands.message[-1].lower():
+                    if "single-stop" in last_message():
+                        message = str(last_message()).split()
+                        message = message[0]
+                        contact_save.insert_contact(message)
+                        contact_save.contacts = get_contact()
+
+                        sleep(1)
+                        Schedulecall(' stoped for -' + message)
+
+                        print(message)
+
                 elif last2nd_message() == question_2.message[-1].lower():
                     if last_message() ==  "1":
                         question_3.send()
@@ -433,9 +455,11 @@ def send_message():
                     if last_message() == "4":
                         question_6.send()
                     if last_message() == "5":
-                        Schedule_call.send_next()
-                        sleep(1)
-                        Schedulecall('wants to talk to you ')
+                        call.send()
+                elif last2nd_message() == call.message[-1].lower():
+                    Schedule_call.send_next()
+                    sleep(1)
+                    Schedulecall('wants to talk to you ')
 
 
                 elif last2nd_message() == question_6.message[-1].lower():
@@ -513,6 +537,8 @@ def send_message():
 
 
 
+
+
                 # bot stop ----------------------------------------------------------------------------------
                 elif last_message() == "admin-stop":
                     stop_bot.send_next()
@@ -553,7 +579,7 @@ def get_element():
                 parent = greendot[0].find_element(By.XPATH , "..").find_element(By.XPATH , "..").find_element(By.XPATH , "..").find_element(By.XPATH , "..")
                 parent = parent.text.split()
                 print(parent[0])
-                cont_check = contact_save.new_contact(parent[0])
+                cont_check = contact_save.new_contact(parent[0].lower())
 
                 print(cont_check)
 

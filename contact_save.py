@@ -10,7 +10,7 @@ filename = "contacts.csv"
 def insert_contact(cont):
 
     # rows = [cont +'-'+ date.today() , cont]
-    rows = [str(cont)]
+    rows = [str(cont).lower()]
 
     # writing to csv file
     with open(filename, 'a',newline='') as csvfile:
@@ -30,7 +30,10 @@ def new_contact(cont):
 
             if cont in row:
                 return True
+            else:
+                continue
 
+        return False
 
 
 
