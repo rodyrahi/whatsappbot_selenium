@@ -595,7 +595,7 @@ def get_element():
 
                 print(cont_check)
 
-                if not cont_check:
+                if not cont_check or  "2022" in get_contact() :
 
                     greendot[-1].click()
                     sleep(1)
