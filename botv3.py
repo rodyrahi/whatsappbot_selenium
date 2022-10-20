@@ -161,10 +161,10 @@ Watch the full presentation without any distractions and get back to me by typin
 😇
 
 My Instagram Handle 👇🏻
-https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=''',
+https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
 
 
-'''I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 hours everyday.
+I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 hours everyday.
 
 So watch it till the very end and after you have watched the full video
 
@@ -190,18 +190,18 @@ question_2 = questions(message=[
 
 ])
 question_3 = questions(message=[
-
-    '1. Did watched the video',
-    '2. Did not watched the video'
+    'DID YOU WATCH THE VIDEO ?'
+    '1. YES',
+    '2. NO'
 
 
 
 ])
 question_4 = questions(message=[
-    'SELECT A PACKAGE',
+    'WHICH PACKAGE WOULD YOU LIKE TO CHOOSE ? ',
     'To chose a Option use 1 , 2 , 3 OR 4 ',
-    '1. PLATINUM PACKAGE - 9997',
-    '2. GOLD PACKAGE - 4130',
+    '1. PLATINUM PACKAGE ',
+    '2. GOLD PACKAGE ',
     '3. I HAVE A QUERY',
     '4. I HAVE MONEY PROBLEM'
 
@@ -220,8 +220,14 @@ question_5 = questions(message=[
 ])
 question_6 = questions(message=[
     '1. TRUST ISSUE WITH ME ?',
-    '2. TRUST ISSUE WITH LEADS GURU'
+    '2. TRUST ISSUE WITH COMPANY'
 
+])
+insta_profile = questions(message=[
+    '''
+    My Instagram Handle 👇🏻
+    https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
+    '''
 ])
 question_7 = questions(message=[
     """
@@ -229,14 +235,14 @@ question_7 = questions(message=[
     I get hundreds of interested people daily on my WhatsApp about this business but I take only limited people and provide  them my personal mentorship so that they can start earning as soon as possible. 
     So, kindly confirm me by Tomorrow if you're starting. 😊👍🏻
     """,
-    '1. PLATINUM PACKAGE - 9997',
-    '2. GOLD PACKAGE - 4130',
+    '1. PLATINUM PACKAGE ',
+    '2. GOLD PACKAGE ',
     '3. I HAVE DOUBTS',
     '4. I WILL CONFIRM TOMORROW'
 ])
 question_1b = questions(message=[
-    '1. PLATINUM PACKAGE - 9997',
-    '2. GOLD PACKAGE - 4130'
+    '1. PLATINUM PACKAGE ',
+    '2. GOLD PACKAGE '
 
 ])
 question_2b = questions(message=[
@@ -251,15 +257,15 @@ question_3b = questions(message=[
 ])
 question_4b = questions(message=[
 
-    '1. GOLD PACKAGE - 4130',
-    '2. SILVER PACKAGE - 2299',
+    '1. GOLD PACKAGE ',
+    '2. SILVER PACKAGE ',
     '3. I NEED MORE TIME'
 
 ])
 question_5b = questions(message=[
-    '1. PLATINUM PACKAGE - 9997',
-    '2. GOLD - 4130 ',
-    '3. SILVER - 2299',
+    '1. PLATINUM PACKAGE ',
+    '2. GOLD ',
+    '3. SILVER ',
 ])
 question_6b = questions(message=[
 
@@ -392,7 +398,7 @@ def send_message():
             if not contact_save.new_contact(get_contact()):
                 print(get_contact())
                 if last_message() in intro:
-                    if get_contact() == "Rajvendra":
+                    if get_contact() == "Rajvndra":
                         # bot stop for a single user-----------------------------------------------------------
                         admin_commands.send()
                         print(last_message())
@@ -401,6 +407,7 @@ def send_message():
                     else:
                         question_1.send_next()
                         presentation_video.send_next()
+                        sleep(1)
                         question_2.send()
                 elif last2nd_message() == admin_commands.message[-1].lower():
                     if "single-stop" in last_message():
@@ -466,6 +473,7 @@ def send_message():
                     if last_message() == "1" or last_message() == "2":
                         print("queation 2")
                        # trust issue  --------------------------------------
+
                         send_file(filepath+r'\voicemails\trust_issue.ogg')
                         sleep(1)
                         question_2.send()
@@ -498,6 +506,8 @@ def send_message():
                         print("ready")
                         contact_save.insert_contact(get_contact())
                         contact_save.contacts = get_contact()
+                        send_file(filepath + r'\voicemails\after_sale.ogg')
+                        sleep(1)
                         question_7b.send_next()
                         sleep(1)
                         Schedulecall('lead is ready to pay ')
@@ -544,8 +554,10 @@ def send_message():
                     stop_bot.send_next()
                     funcs.stop = True
                 else:
-                    unrecognised.send()
-                    get_element()
+                    question_1.send_next()
+                    presentation_video.send_next()
+                    sleep(1)
+                    question_2.send()
 
                 sleep(1)
                 get_element()
