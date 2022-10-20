@@ -12,6 +12,8 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
+from dateutil.parser import *
+
 import os
 import sys
 
@@ -23,8 +25,8 @@ contacts = []
 filepath = os.getcwd()
 print(filepath)
 
-
 user = os.getlogin()
+
 
 def dec():
     print("-ve")
@@ -34,9 +36,9 @@ def dec():
 options = Options()
 options.add_argument('--profile-directory=Person 1')
 options.add_argument(
-    "user-data-dir=C:\\Users\\"+user+"\\AppData\\Local\\Google\\Chrome\\User Data\\")  # Path to your chrome profile
+    "user-data-dir=C:\\Users\\" + user + "\\AppData\\Local\\Google\\Chrome\\User Data\\")  # Path to your chrome profile
 # driver = webdriver.Chrome(executable_path="C:\dev\chromedriver\chromedriver.exe", options=options)
-driver = webdriver.Chrome(ChromeDriverManager().install() ,options=options )
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 driver.get('https://web.whatsapp.com')
 
 # fp = webdriver.FirefoxProfile('/Users/<username>/Library/Application Support/Firefox/Profiles/')
@@ -53,15 +55,17 @@ input("enter")
 
 print(filepath)
 
-intro = ['hey', 'hello' , 'hi' , 'hii' , 'hola' , 'heyy' ]
+intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy']
 
 
 def Schedulecall(message):
     try:
-        url = 'https://web.whatsapp.com/send?phone=+918109204371+&text='+get_contact()+' ' + message
+        url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + get_contact() + ' ' + message
         driver.get(url)
         sleep(5)
-        click_btn = driver.find_element(By.XPATH,'//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(Keys.ENTER)
+        click_btn = driver.find_element(By.XPATH,
+                                        '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(
+            Keys.ENTER)
         sleep(1)
         get_element()
     except:
@@ -75,14 +79,12 @@ def element(url):
     return element
 
 
-
 def get_contact():
     contact = element('//*[@id="main"]/header/div[2]/div/div').text
     # contact = contact.split()
     # contact = contact[-2] + contact[-1]
 
     return contact
-
 
 
 class questions():
@@ -108,10 +110,9 @@ class questions():
                 input_box[0])
             input_box[0].send_keys(Keys.ENTER)
 
-
-
         sleep(1)
         get_element()
+
     def send_next(self):
         for x in self.message:
             xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
@@ -132,10 +133,6 @@ class questions():
             print("xxx")
 
 
-
-
-
-
 # def send_next(self):
 #         xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
 #         input_box = driver.find_elements(By.XPATH, xpath_input)
@@ -146,71 +143,53 @@ class questions():
 
 presentation_video = questions(message=[
 
-
-'''How to earn upto 30000/-  to 40000/- per month from Social media
-
+'''
+How to earn upto 30000/-  to 40000/- per month from Social media
 😇 Work From Home 😇
-
 👇🏻👇🏻👇🏻
-
 PRESENTATION VIDEO
-
 https://youtu.be/PfJuuQJvGjM
-
 Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"
 😇
-
 My Instagram Handle 👇🏻
 https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
-
-
-I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 hours everyday.
-
+I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 
+hours everyday.
 So watch it till the very end and after you have watched the full video
-
 Message me I'd be happy to help you out! 😇
-
-Note: Message me within 24 hours otherwise I won't be able to help you out. I hope you value the given time. 🥰
+Note: Message me within 24 hours otherwise I won't be able to help you out. 
+I hope you value the given time. 🥰
 '''
 
-
 ])
-
 
 question_1 = questions(message=[
     "Hey I'm SUGAR "
 ])
 question_2 = questions(message=[
-   'To chose a Option use 1,2',
-   '1. INTERESTED',
-   '2. NOT INTERESTED'
-
-
-
+    'To chose a Option Type 1,2',
+    '1. INTERESTED',
+    '2. NOT INTERESTED'
 
 ])
 question_3 = questions(message=[
-    'DID YOU WATCH THE VIDEO ?'
+    'DID YOU WATCH THE VIDEO ?',
     '1. YES',
     '2. NO'
-
-
 
 ])
 question_4 = questions(message=[
     'WHICH PACKAGE WOULD YOU LIKE TO CHOOSE ? ',
-    'To chose a Option use 1 , 2 , 3 OR 4 ',
+    'To chose a Option Type 1 , 2 , 3 OR 4 ',
     '1. PLATINUM PACKAGE ',
     '2. GOLD PACKAGE ',
     '3. I HAVE A QUERY',
     '4. I HAVE MONEY PROBLEM'
 
-
-
 ])
 
 question_5 = questions(message=[
-    'To chose a Option use 1 , 2 , 3 ,4 or 5',
+    'To chose a Option Type 1 , 2 , 3 ,4 or 5',
 
     '1. I HAVE MONEY PROBLEM',
     '2. SELF DOUBT',
@@ -280,7 +259,6 @@ question_6b = questions(message=[
     7. Send me screenshot after doing payment successfully 😊👍🏻
     '''
 
-
 ])
 question_7b = questions(message=[
 
@@ -291,8 +269,7 @@ question_7b = questions(message=[
     '''
 
 ])
-continue_with_gs  = questions(message=[
-
+continue_with_gs = questions(message=[
 
     "DO YOU STILL WANT TO CONTINUE WITH GOLD AND SILVER? ",
     "1. YES",
@@ -300,15 +277,14 @@ continue_with_gs  = questions(message=[
 
 ])
 
-
 silver_disadvantage = questions(message=[
-'''
-    Silver lite course hai
-    Jada kuch seekhne ko bhi nahi milega
-    Commission bhi kam hai
-    And you won't be able to attend my mentorship sessions in silver
+    '''
+        Silver lite course hai
+        Jada kuch seekhne ko bhi nahi milega
+        Commission bhi kam hai
+        And you won't be able to attend my mentorship sessions in silver
     
-'''
+    '''
 ])
 
 call = questions(message=[
@@ -322,7 +298,7 @@ Schedule_call = questions(message=[
 ])
 
 unrecognised = questions(message=[
-    'PLEASE TYPE "Hey" TO START!',
+    "PLEASE TYPE '1' , '2'  , '3' ... ",
 ])
 stop_bot = questions(message=[
     'Bot is stopped'
@@ -336,7 +312,6 @@ validity = questions(message=[
 admin_commands = questions(message=[
     'you are admin'
 ])
-
 
 
 def send_file(filepath):
@@ -398,7 +373,7 @@ def send_message():
             if not contact_save.new_contact(get_contact()):
                 print(get_contact())
                 if last_message() in intro:
-                    if get_contact() == "Rajvndra":
+                    if get_contact() == "Rajvendra":
                         # bot stop for a single user-----------------------------------------------------------
                         admin_commands.send()
                         print(last_message())
@@ -422,47 +397,54 @@ def send_message():
                         print(message)
 
                 elif last2nd_message() == question_2.message[-1].lower():
-                    if last_message() ==  "1":
+                    if last_message() == "1":
                         question_3.send()
-                    if last_message() == "2":
+                    elif last_message() == "2":
                         end()
+                    else:
+                        unrecognised.send()
 
 
                 elif last2nd_message() == question_3.message[-1].lower():
-                    if last_message()=="1":
+                    if last_message() == "1":
                         question_4.send()
 
-                    if last_message() =="2":
+                    elif last_message() == "2":
                         presentation_video.send_next()
                         question_7.send()
+                    else:
+                        unrecognised.send()
                 elif last2nd_message() == question_4.message[-1].lower():
                     if last_message() == "1":
                         question_2b.send()
-                    if last_message() == "2":
+                    elif last_message() == "2":
                         question_2b.send()
-                    if last_message() == "3":
+                    elif last_message() == "3":
                         question_5.send()
-                    if last_message() == "4":
+                    elif last_message() == "4":
                         question_3b.send()
+                    else:
+                        unrecognised.send()
 
                 elif last2nd_message() == question_5.message[-1].lower():
                     if last_message() == "1":
-                        send_file(filepath +r'\voicemails\money_problem.ogg')
+                        send_file(filepath + r'\voicemails\money_problem.ogg')
                         sleep(1)
                         question_4.send()
-                    if last_message() == "2":
-                        send_file( filepath+r'\voicemails\self_dout.ogg')
+                    elif last_message() == "2":
+                        send_file(filepath + r'\voicemails\self_dout.ogg')
                         sleep(1)
                         question_4.send()
-                    if last_message() == "3":
-
-                        send_file(filepath+r'\voicemails\way_to_earn.ogg')
+                    elif last_message() == "3":
+                        send_file(filepath + r'\voicemails\way_to_earn.ogg')
                         sleep(1)
                         question_4.send()
-                    if last_message() == "4":
+                    elif last_message() == "4":
                         question_6.send()
-                    if last_message() == "5":
+                    elif last_message() == "5":
                         call.send()
+                    else:
+                        unrecognised.send()
                 elif last2nd_message() == call.message[-1].lower():
                     Schedule_call.send_next()
                     sleep(1)
@@ -472,11 +454,13 @@ def send_message():
                 elif last2nd_message() == question_6.message[-1].lower():
                     if last_message() == "1" or last_message() == "2":
                         print("queation 2")
-                       # trust issue  --------------------------------------
+                        # trust issue  --------------------------------------
 
-                        send_file(filepath+r'\voicemails\trust_issue.ogg')
+                        send_file(filepath + r'\voicemails\trust_issue.ogg')
                         sleep(1)
                         question_2.send()
+                    else:
+                        unrecognised.send()
 
 
 
@@ -484,20 +468,24 @@ def send_message():
                 elif last2nd_message() == question_7.message[-1].lower():
                     if last_message() == "1":
                         question_2b.send()
-                    if  last_message() == "2":
+                    elif last_message() == "2":
                         send_file(filepath + r'\voicemails\plat_pitch.ogg')
                         sleep(1)
                         question_1b.send()
-                    if last_message()=="3":
+                    elif last_message() == "3":
                         question_5.send()
-                    if last_message() == "4":
+                    elif last_message() == "4":
                         question_2.send()
+                    else:
+                        unrecognised.send()
                 elif last2nd_message() == question_1b.message[-1].lower():
-                    if last_message()=="1":
+                    if last_message() == "1":
                         question_2b.send()
-                    if last_message() == "2":
+                    elif last_message() == "2":
                         # send_file(filepath+r'\voicemails\plat_pitch.ogg')
                         question_2b.send()
+                    else:
+                        unrecognised.send()
 
 
                 # payment------------------------------------------------------------
@@ -511,39 +499,49 @@ def send_message():
                         question_7b.send_next()
                         sleep(1)
                         Schedulecall('lead is ready to pay ')
-                    if last_message() == "2":
+                    elif last_message() == "2":
                         question_6b.send()
-                    if last_message() == "3":
+                    elif last_message() == "3":
                         question_3b.send()
                         # question_9.send()
+                    else:
+                        unrecognised.send()
                 elif last2nd_message() == question_3b.message[-1].lower():
                     if last_message() == "1":
                         question_4b.send()
-                    if last_message() == "2":
-                        send_file(filepath+"\screenshots\gold_ss.jpeg")
-                        send_file(filepath+"\screenshots\plat_ss.jpeg")
+                    elif last_message() == "2":
+                        send_file(filepath + "\screenshots\gold_ss.jpeg")
+                        send_file(filepath + "\screenshots\plat_ss.jpeg")
                         sleep(1)
                         send_file(filepath + r'\voicemails\plat_pitch.ogg')
 
                         sleep(2)
                         continue_with_gs.send()
+                    else:
+                        unrecognised.send()
                 elif last2nd_message() == continue_with_gs.message[-1].lower():
-                        if last_message() == "1":
-                            question_4b.send()
-                        if last_message() == "2":
-                            question_5b.send()
+                    if last_message() == "1":
+                        question_4b.send()
+                    elif last_message() == "2":
+                        question_5b.send()
+                    else:
+                        unrecognised.send()
                 elif last2nd_message() == question_4b.message[-1].lower():
                     if last_message() == "1":
                         question_2b.send()
-                    if last_message() == "2":
+                    elif last_message() == "2":
                         silver_disadvantage.send_next()
                         question_5b.send()
-                    if last_message() =="3":
+                    elif last_message() == "3":
                         question_7.send()
+                    else:
+                        unrecognised.send()
 
                 elif last2nd_message() == question_5b.message[-1].lower():
-                    if last_message() == "1" or last_message() == "2" or last_message() =="3":
+                    if last_message() == "1" or last_message() == "2" or last_message() == "3":
                         question_2b.send()
+                    else:
+                        unrecognised.send()
 
 
 
@@ -576,10 +574,30 @@ def send_message():
         get_element()
 
 
+
+
+def find_date(parent):
+
+
+
+
+
+    for x in parent:
+        try:
+            if len(x) > 4 and bool(parse(x)):
+                print("True")
+                return True
+
+        except:
+            continue
+    print("False")
+    return False
+
+
 def get_element():
+    months = ["jan", "feb", "march", "april", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"]
     # finding green dot
     print(funcs.validity)
-
 
     if funcs.validity > 0:
         try:
@@ -588,21 +606,29 @@ def get_element():
 
             # if not elements() in contacts:
             if (greendot):
-                parent = greendot[0].find_element(By.XPATH , "..").find_element(By.XPATH , "..").find_element(By.XPATH , "..").find_element(By.XPATH , "..")
+                parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,
+                                                                                                            "..").find_element(
+                    By.XPATH, "..")
                 parent = parent.text.split()
-                print(parent[0])
+
                 cont_check = contact_save.new_contact(parent[0].lower())
 
-                print(cont_check)
+                find_date(parent)
 
-                if not cont_check or  "2022" in get_contact() :
+                if not find_date(parent):
 
-                    greendot[-1].click()
-                    sleep(1)
-                    send_message()
+                    if not cont_check:
+
+                        greendot[-1].click()
+                        sleep(1)
+                        send_message()
+                    else:
+                        sleep(1)
+                        send_message()
                 else:
                     sleep(1)
                     send_message()
+
             else:
                 sleep(1)
                 send_message()
