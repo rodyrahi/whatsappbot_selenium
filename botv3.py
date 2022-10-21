@@ -62,7 +62,7 @@ def Schedulecall(message):
     try:
         url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + get_contact() + ' ' + message
         driver.get(url)
-        sleep(5)
+        sleep(3)
         click_btn = driver.find_element(By.XPATH,
                                         '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(
             Keys.ENTER)
@@ -143,7 +143,7 @@ class questions():
 
 presentation_video = questions(message=[
 
-'''
+    '''
 How to earn upto 30000/-  to 40000/- per month from Social media
 😇 Work From Home 😇
 👇🏻👇🏻👇🏻
@@ -164,42 +164,43 @@ I hope you value the given time. 🥰
 ])
 
 question_1 = questions(message=[
-    "Hey I'm SUGAR "
+    "Hey I'm SUGAR (Virtual Assistant) "
 ])
 question_2 = questions(message=[
-    'To chose a Option Type 1,2',
+    'To choose an Option TYPE 1 or 2',
     '1. INTERESTED',
     '2. NOT INTERESTED'
 
 ])
 question_3 = questions(message=[
-    'DID YOU WATCH THE VIDEO ?',
+    'HAVE YOU WATCHED THE VIDEO ?',
     '1. YES',
-    '2. NO'
+    '2. NOT YET'
 
 ])
 question_4 = questions(message=[
     'WHICH PACKAGE WOULD YOU LIKE TO CHOOSE ? ',
-    'To chose a Option Type 1 , 2 , 3 OR 4 ',
+    'To choose an Option TYPE 1 , 2 , 3 or 4 ',
     '1. PLATINUM PACKAGE ',
     '2. GOLD PACKAGE ',
-    '3. I HAVE A QUERY',
-    '4. I HAVE MONEY PROBLEM'
+    '3. I HAVE MONEY PROBLEM',
+    '4. I HAVE A QUERY'
 
 ])
 
 question_5 = questions(message=[
-    'To chose a Option Type 1 , 2 , 3 ,4 or 5',
+    'To choose an Option TYPE 1 , 2 , 3 , 4 or 5',
 
     '1. I HAVE MONEY PROBLEM',
     '2. SELF DOUBT',
-    '3. HOW TO EARN THROUGH LEADS GURU?',
+    '3. HOW TO EARN THROUGH LEADSGURU?',
     '4. TRUST ISSUE',
     '5. I HAVE ANOTHER QUERY'
 ])
 question_6 = questions(message=[
+    'To choose an Option TYPE 1 or 2 ',
     '1. TRUST ISSUE WITH ME ?',
-    '2. TRUST ISSUE WITH COMPANY'
+    '2. TRUST ISSUE WITH COMPANY?'
 
 ])
 insta_profile = questions(message=[
@@ -210,38 +211,45 @@ insta_profile = questions(message=[
 ])
 question_7 = questions(message=[
     """
-    I've limited slots in my group
-    I get hundreds of interested people daily on my WhatsApp about this business but I take only limited people and provide  them my personal mentorship so that they can start earning as soon as possible. 
-    So, kindly confirm me by Tomorrow if you're starting. 😊👍🏻
-    """,
+I've limited slots in my group
+I get hundreds of interested people daily on my WhatsApp about this business but I take only limited people and provide  them my personal mentorship so that they can start earning as soon as possible. 
+So, kindly confirm me by Tomorrow if you're starting. 😊👍🏻
+""",
+    'To choose an Option TYPE 1 , 2 , 3 or 4 ',
     '1. PLATINUM PACKAGE ',
     '2. GOLD PACKAGE ',
     '3. I HAVE DOUBTS',
     '4. I WILL CONFIRM TOMORROW'
 ])
 question_1b = questions(message=[
+    'To choose an Option TYPE 1 or 2 '
     '1. PLATINUM PACKAGE ',
     '2. GOLD PACKAGE '
 
 ])
 question_2b = questions(message=[
-    'How would you like to pay?',
+    'HOW WOULD YOU LIKE TO PAY?',
     '1. PAY ME DIRECTLY',
-    '2. PAY USING AFFLITAE LINK',
+    '2. PAY USING AFFILIATE LINK'
+
+])
+money_problem = questions(message=[
     '3. I HAVE MONEY PROBLEM'
 ])
 question_3b = questions(message=[
+    'To choose an Option TYPE 1 or 2 ',
     '1. I WILL ARRANGE MONEY',
     '2. I WANT TO START WITH SILVER'
 ])
 question_4b = questions(message=[
-
+    'To choose an Option TYPE 1 , 2 or 3 ',
     '1. GOLD PACKAGE ',
     '2. SILVER PACKAGE ',
     '3. I NEED MORE TIME'
 
 ])
 question_5b = questions(message=[
+    'To choose an Option TYPE 1 , 2 or 3 ',
     '1. PLATINUM PACKAGE ',
     '2. GOLD ',
     '3. SILVER ',
@@ -249,15 +257,15 @@ question_5b = questions(message=[
 question_6b = questions(message=[
 
     '''
-    https://leadsguru.in/?ref=Deepanshu29"
-    1. Open the above link in your browser. 
-    2. Click on "Get Started Now"
-    3. Choose the course (Silver/Gold/Platinum)"
-    4. Click on "Buy Now"
-    5. Fill all your details and take screenshot of username and password"
-    6. Click on "Instamojo" for UPI or card payment
-    7. Send me screenshot after doing payment successfully 😊👍🏻
-    '''
+https://leadsguru.in/?ref=Deepanshu29"
+1. Open the above link in your browser. 
+2. Click on "Get Started Now"
+3. Choose the course (Silver/Gold/Platinum)"
+4. Click on "Buy Now"
+5. Fill all your details and take screenshot of username and password"
+6. Click on "Instamojo" for UPI or card payment
+7. Send me screenshot after doing payment successfully 😊👍🏻
+'''
 
 ])
 question_7b = questions(message=[
@@ -271,7 +279,7 @@ question_7b = questions(message=[
 ])
 continue_with_gs = questions(message=[
 
-    "DO YOU STILL WANT TO CONTINUE WITH GOLD AND SILVER? ",
+    "DO YOU STILL WANT TO CONTINUE WITH GOLD OR SILVER? ",
     "1. YES",
     "2. NO"
 
@@ -298,7 +306,7 @@ Schedule_call = questions(message=[
 ])
 
 unrecognised = questions(message=[
-    "PLEASE TYPE TYPE A CORRECT A OPTION",
+    "PLEASE TYPE TYPE A CORRECT OPTION OR TYPE 'HEY' TO START AGAIN",
 ])
 stop_bot = questions(message=[
     'Bot is stopped'
@@ -314,6 +322,8 @@ admin_commands = questions(message=[
 ])
 
 current_question = question_1
+
+
 def send_file(filepath):
     image_url = '/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/div/ul/li[1]/button/input'
     attach_url = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div'
@@ -373,7 +383,7 @@ def send_message():
             if not contact_save.new_contact(get_contact()):
                 print(get_contact())
                 if last_message() in intro:
-                    if get_contact() == "Rajvendra":
+                    if get_contact() == "Rajendra":
                         # bot stop for a single user-----------------------------------------------------------
                         admin_commands.send()
                         print(last_message())
@@ -422,16 +432,36 @@ def send_message():
                 elif last2nd_message() == question_4.message[-1].lower():
                     funcs.current_question = question_4
                     if last_message() == "1":
-                        question_2b.send()
+                        question_2b.send_next()
+                        money_problem.send()
                     elif last_message() == "2":
-                        question_2b.send()
+                        question_2b.send_next()
+                        money_problem.send()
                     elif last_message() == "3":
-                        question_5.send()
-                    elif last_message() == "4":
                         question_3b.send()
+                    elif last_message() == "4":
+                        question_5.send()
                     else:
                         unrecognised.send_next()
                         question_4.send()
+
+                elif last2nd_message() == money_problem.message[-1].lower():
+                    if last_message()=="1":
+                        contact_save.insert_contact(get_contact())
+                        contact_save.contacts = get_contact()
+                        send_file(filepath + r'\voicemails\after_sale.ogg')
+                        sleep(1)
+                        question_7b.send_next()
+                        sleep(1)
+                        Schedulecall('lead is ready to pay ')
+                    if last_message()=="2":
+                        question_6b.send()
+                    if last_message()=="3":
+                        question_3b.send()
+                    else:
+                        question_4.send_next()
+                        money_problem.send()
+
 
                 elif last2nd_message() == question_5.message[-1].lower():
                     funcs.current_question = question_5
@@ -455,11 +485,17 @@ def send_message():
                         unrecognised.send_next()
                         question_5.send()
                 elif last2nd_message() == call.message[-1].lower():
-                    funcs.current_question = call
-                    Schedule_call.send_next()
-                    sleep(1)
-                    Schedulecall('wants to talk to you ')
+                    if last_message() == "1":
 
+                        funcs.current_question = call
+                        contact_save.insert_contact(get_contact())
+                        contact_save.contacts = get_contact()
+                        Schedule_call.send_next()
+                        sleep(1)
+                        Schedulecall('wants to talk to you ')
+                    else:
+                        unrecognised.send_next()
+                        call.send()
 
                 elif last2nd_message() == question_6.message[-1].lower():
                     funcs.current_question = question_6
@@ -517,8 +553,7 @@ def send_message():
                         Schedulecall('lead is ready to pay ')
                     elif last_message() == "2":
                         question_6b.send()
-                    elif last_message() == "3":
-                        question_3b.send()
+
                         # question_9.send()
                     else:
                         unrecognised.send_next()
@@ -577,13 +612,11 @@ def send_message():
                     stop_bot.send_next()
                     funcs.stop = True
                 else:
-                    if last2nd_message() not in questions:
-                        question_1.send_next()
-                        presentation_video.send_next()
-                        sleep(1)
-                        question_2.send()
-                    else:
-                        funcs.current_question[0].send()
+
+                    question_1.send_next()
+                    presentation_video.send_next()
+                    sleep(1)
+                    question_2.send()
 
                 sleep(1)
                 get_element()
@@ -602,23 +635,18 @@ def send_message():
         get_element()
 
 
-
-
 def find_date(parent):
 
 
-
-
-
-    for x in parent:
-        try:
-            if len(x) > 4 and bool(parse(x)):
-                print("True")
-                return True
-
-        except:
-            continue
-    print("False")
+    # for x in parent:
+    #     try:
+    #         if len(x) > 4 and bool(parse(x)):
+    #             print("True")
+    #             return True
+    #
+    #     except:
+    #         continue
+    # print("False")
     return False
 
 
