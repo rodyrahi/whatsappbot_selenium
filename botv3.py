@@ -38,7 +38,7 @@ options.add_argument('--profile-directory=Person 1')
 options.add_argument(
     "user-data-dir=C:\\Users\\" + user + "\\AppData\\Local\\Google\\Chrome\\User Data\\")  # Path to your chrome profile
 # driver = webdriver.Chrome(executable_path="C:\dev\chromedriver\chromedriver.exe", options=options)
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome("C:\dev\chromedriver\chromedriver.exe", options=options)
 driver.get('https://web.whatsapp.com')
 
 # fp = webdriver.FirefoxProfile('/Users/<username>/Library/Application Support/Firefox/Profiles/')
@@ -67,10 +67,10 @@ def Schedulecall(message):
                                         '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(
             Keys.ENTER)
         sleep(1)
-        get_element()
+        funcs.find = True
     except:
         sleep(1)
-        get_element()
+        funcs.find = True
 
 
 def element(url):
@@ -111,7 +111,7 @@ class questions():
             input_box[0].send_keys(Keys.ENTER)
 
         sleep(1)
-        get_element()
+        funcs.find = True
 
     def send_next(self):
         for x in self.message:
@@ -373,7 +373,7 @@ def end():
     input_box = driver.find_elements(By.XPATH, xpath_input)
     input_box[0].send_keys(message[0] + Keys.ENTER)
 
-    get_element()
+    funcs.find = True
 
 
 def send_message():
@@ -619,20 +619,20 @@ def send_message():
                     question_2.send()
 
                 sleep(1)
-                get_element()
+                funcs.find = True
             else:
                 sleep(1)
-                get_element()
+                funcs.find = True
 
         else:
             if last_message() == "admin-start":
                 start_bot.send_next()
                 funcs.stop = False
-                get_element()
-            get_element()
+                funcs.find = True
+            funcs.find = True
 
     else:
-        get_element()
+        funcs.find = True
 
 
 def find_date(parent):
@@ -651,9 +651,8 @@ def find_date(parent):
 
 
 def get_element():
-    months = ["jan", "feb", "march", "april", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"]
     # finding green dot
-    print(funcs.validity)
+
 
     if funcs.validity > 0:
         try:
@@ -690,10 +689,10 @@ def get_element():
                 send_message()
             # else:
             #     sleep(1)
-            #     get_element()
+            #     func.find = True
         except:
             sleep(2)
-            get_element()
+            funcs.find = True
     else:
         print("out")
         greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
@@ -705,11 +704,14 @@ def get_element():
             funcs.validity = int(message[2])
 
         sleep(10)
-        get_element()
+        funcs.find = True
 
 
 code = funcs.genrate_code()
 
-get_element()
+
+while funcs.find:
+    
+    get_element()
 # print(opt._option(last_message() , last2nd_message()))
-sleep(1)
+    sleep(1)

@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 import schedule
 import time
 validity = 30
+find = True
 stop = False
 fill = False
 valid_days = 1
