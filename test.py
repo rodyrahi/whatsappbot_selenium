@@ -14,7 +14,7 @@ question_3 = questions( question='u like her' ,option_1='yes' , option_2='no')
 question_4 = questions( question='i know you do' ,option_1='yes' , option_2='no')
 
 def print_question(question):
-    print(question.question + question.option_1 + question.option_2)
+    print(question.Question + question.option_1 + question.option_2)
     message = input("enter")
     if question == question_1:
         reply(question , question_2 , question_2 , message)

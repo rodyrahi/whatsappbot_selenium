@@ -1,44 +1,28 @@
-class questions():
+import gc
 
-    def __init__(self, message):
-        self.message = message
 
-    def send(self):
-        for x in self.message:
-            xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
-            input_box = driver.find_elements(By.XPATH, xpath_input)
-            driver.execute_script(
-                f'''
-                          const text = `{x}`;
-                          const dataTransfer = new DataTransfer();
-                          dataTransfer.setData('text', text);
-                          const event = new ClipboardEvent('paste', {{
-                            clipboardData: dataTransfer,
-                            bubbles: true
-                          }});
-                          arguments[0].dispatchEvent(event)
-                          ''',
-                input_box[0])
-            input_box[0].send_keys(Keys.ENTER)
+class Car():
+    def __init__(self, name=None):
+        self.rate = 20
+        self.speed = 200
+        self.name = name
 
-        sleep(1)
-        funcs.find = True
 
-    def send_next(self):
-        for x in self.message:
-            xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
-            input_box = driver.find_elements(By.XPATH, xpath_input)
-            driver.execute_script(
-                f'''
-                            const text = `{x}`;
-                            const dataTransfer = new DataTransfer();
-                            dataTransfer.setData('text', text);
-                            const event = new ClipboardEvent('paste', {{
-                              clipboardData: dataTransfer,
-                              bubbles: true
-                            }});
-                            arguments[0].dispatchEvent(event)
-                            ''',
-                input_box[0])
-            input_box[0].send_keys(Keys.ENTER)
-            print("xxx")
+
+
+
+maruti = Car("maruti")
+
+tata = Car('tata')
+
+Benz = Car('benz')
+
+ls=[]
+
+for obj in gc.get_objects():
+    if isinstance(obj,Car):
+        print(obj.name)
+        ls.append(obj)
+
+print(ls)
+

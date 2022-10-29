@@ -124,10 +124,10 @@ def ask_question(question):
         input_box = driver.find_elements(By.XPATH, xpath_input)
         input_box[0].send_keys("Not recognised please type hi to start" + Keys.ENTER)
         get_element()
-    if not last_message() == question.question:
+    if not last_message() == question.Question:
         xpath_input = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]'
         input_box = driver.find_elements(By.XPATH, xpath_input)
-        input_box[0].send_keys(question.question + Keys.ENTER)
+        input_box[0].send_keys(question.Question + Keys.ENTER)
 def reply(question , reply_1 , reply_2 , reply_3, message ):
     if  message == question.option_1 :
         ask_question(reply_1)
@@ -135,7 +135,7 @@ def reply(question , reply_1 , reply_2 , reply_3, message ):
         ask_question(reply_2)
     elif message == question.option_3:
         ask_question(reply_3)
-    elif message == question.question:
+    elif message == question.Question:
         get_element()
     else:
         get_element()

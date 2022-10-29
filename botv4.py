@@ -1,7 +1,7 @@
 import os
 from difflib import SequenceMatcher
 from time import sleep
-
+import gc
 from selenium.webdriver import Keys
 
 import contact_save
@@ -65,7 +65,7 @@ def last_message():
     return message
 
 
-class question():
+class Question():
     def __init__(self, message, op1=None, op2=None, op3=None):
         self.m = str(message.lower())
         self.op1 = op1
@@ -99,21 +99,21 @@ class question():
             # print(f'self.m : {self.m} is equal to x={x}')
             self.opt_check()
             return True
-        elif self.op1 and is_matched(self.op1.m, x) :
+        elif self.op1 and is_matched(self.op1.m, x):
             # print(f'self.m.op1 : {self.op1.m} is equal to x={x}')
             self.op1.opt_check()
             return True
-        elif self.op2 and is_matched(self.op2.m, x) :
+        elif self.op2 and is_matched(self.op2.m, x):
             # print(f'self.m.op2 : {self.op2.m} is equal to x={x}')
             self.op2.opt_check()
             return True
-        elif self.op3 and  is_matched(self.op3.m, x) :
+        elif self.op3 and is_matched(self.op3.m, x):
             # print(f'self.m.op3 : {self.op3.m} is equal to x={x}')
             self.op3.opt_check()
             return True
         else:
             if not self.visited:
-            # print(f'{x} is not equal to any option and itself')
+                # print(f'{x} is not equal to any option and itself')
                 if self.op1:
                     # print('Going inside find of op1')
                     self.op1.find(x)
@@ -195,14 +195,14 @@ class question():
         input_box[0].send_keys(Keys.ENTER)
 
 
-q4 = question(message="ok")
-q3 = question(message="""no problem 
+q4 = Question(message="ok")
+q3 = Question(message="""no problem 
 1. yes
 2. no""")
-q2 = question(message="""you like python?
+q2 = Question(message="""you like python?
 1. yes
 2. NO""")
-q1 = question(message="""are you into computers?
+q1 = Question(message="""are you into computers?
 1. yes 
 2. No""")
 
@@ -215,14 +215,33 @@ q2.op2 = q3
 q4.op1 = q1
 
 
+question_list=[]
+
+for obj in gc.get_objects():
+    if isinstance(obj, Question):
+        question_list.append(obj)
+
+
+
+
+
+
+
+
+
 def send_message():
+    # s = question.get_objects()
+    # print(s)
     print(f'running q1 find with x as {bot_last_message()}')
-    print(f'q1 find is {q1.find(bot_last_message())}')
-    if is_new_message() and not q1.find(bot_last_message()):
-        q1.send()
+    # print(f'q1 find is {q1.find(bot_last_message())}')
+    if bot_last_message() is None or last_message() in ['hello', 'hii', 'hi', 'hey',]:
+        if is_new_message():
+            q1.send()
 
-
-    q1.find(bot_last_message())
+    # q1.find(bot_last_message())
+    for q in question_list:
+        if is_matched(q.m,bot_last_message()):
+            q.opt_check()
 
 
 def get_element():

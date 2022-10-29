@@ -13,6 +13,8 @@ from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from dateutil.parser import *
+import gc
+
 
 import os
 import sys
