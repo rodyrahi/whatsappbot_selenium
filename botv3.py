@@ -60,6 +60,9 @@ print(filepath)
 intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy']
 
 
+def is_new_message():
+    return not last_message() == bot_last_message()
+
 def Schedulecall(message):
     try:
         url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + get_contact() + ' ' + message
@@ -341,21 +344,20 @@ def send_file(filepath):
 
     # question_15.send()
 
-
-def last2nd_message():
+def bot_last_message():
+    sleep(0.5)
     lastmessage = driver.find_elements(By.CLASS_NAME, 'message-out')
+    # lastmessage =lastmessage.find_element(By.CLASS_NAME,'_1Gy50')
 
     if lastmessage:
-        message = lastmessage[-1].text
-        message = message.split()
-        message = message[:-2]
-        message = ' '.join(message)
-        message = str(message.lower())
-        print(message)
+        lastmessage = lastmessage[-1].find_element(By.CLASS_NAME, '_1Gy50')
+        message = lastmessage.text
+        print("inside bot last message " + message)
+       
 
         return message
     else:
-        unrecognised.send()
+        print("unrecoginised")
 
 
 def last_message():
@@ -380,7 +382,7 @@ def end():
 
 def send_message():
     # get_contact()
-    if not last_message() == last2nd_message():
+    if not last_message() == bot_last_message():
         if not funcs.stop:
             if not contact_save.new_contact(get_contact()):
                 print(get_contact())
@@ -396,7 +398,7 @@ def send_message():
                         presentation_video.send_next()
                         sleep(1)
                         question_2.send()
-                elif last2nd_message() == admin_commands.message[-1].lower():
+                elif bot_last_message() == admin_commands.message[-1].lower():
 
                     if "single-stop" in last_message():
                         message = str(last_message()).split()
@@ -409,7 +411,7 @@ def send_message():
 
                         print(message)
 
-                elif last2nd_message() == question_2.message[-1].lower():
+                elif bot_last_message() == question_2.message[-1].lower():
                     funcs.current_question = question_2
                     if last_message() == "1":
                         question_3.send()
@@ -420,7 +422,7 @@ def send_message():
                         question_2.send()
 
 
-                elif last2nd_message() == question_3.message[-1].lower():
+                elif bot_last_message() == question_3.message[-1].lower():
                     funcs.current_question = question_3
                     if last_message() == "1":
                         question_4.send()
@@ -431,7 +433,7 @@ def send_message():
                     else:
                         unrecognised.send_next()
                         question_3.send()
-                elif last2nd_message() == question_4.message[-1].lower():
+                elif bot_last_message() == question_4.message[-1].lower():
                     funcs.current_question = question_4
                     if last_message() == "1":
                         question_2b.send_next()
@@ -447,7 +449,7 @@ def send_message():
                         unrecognised.send_next()
                         question_4.send()
 
-                elif last2nd_message() == money_problem.message[-1].lower():
+                elif bot_last_message() == money_problem.message[-1].lower():
                     if last_message()=="1":
                         contact_save.insert_contact(get_contact())
                         contact_save.contacts = get_contact()
@@ -465,7 +467,7 @@ def send_message():
                         money_problem.send()
 
 
-                elif last2nd_message() == question_5.message[-1].lower():
+                elif bot_last_message() == question_5.message[-1].lower():
                     funcs.current_question = question_5
                     if last_message() == "1":
                         send_file(filepath + r'\voicemails\money_problem.ogg')
@@ -486,7 +488,7 @@ def send_message():
                     else:
                         unrecognised.send_next()
                         question_5.send()
-                elif last2nd_message() == call.message[-1].lower():
+                elif bot_last_message() == call.message[-1].lower():
                     if last_message() == "1":
 
                         funcs.current_question = call
@@ -499,7 +501,7 @@ def send_message():
                         unrecognised.send_next()
                         call.send()
 
-                elif last2nd_message() == question_6.message[-1].lower():
+                elif bot_last_message() == question_6.message[-1].lower():
                     funcs.current_question = question_6
                     if last_message() == "1" or last_message() == "2":
                         print("queation 2")
@@ -515,7 +517,7 @@ def send_message():
 
 
                 # section-2 -----------------------------------------------------------------
-                elif last2nd_message() == question_7.message[-1].lower():
+                elif bot_last_message() == question_7.message[-1].lower():
                     funcs.current_question = question_7
                     if last_message() == "1":
                         question_2b.send()
@@ -529,7 +531,7 @@ def send_message():
                         question_2.send()
                         question_7.send()
 
-                elif last2nd_message() == question_1b.message[-1].lower():
+                elif bot_last_message() == question_1b.message[-1].lower():
                     funcs.current_question = question_1b
                     if last_message() == "1":
                         question_2b.send()
@@ -542,7 +544,7 @@ def send_message():
 
 
                 # payment------------------------------------------------------------
-                elif last2nd_message() == question_2b.message[-1].lower():
+                elif bot_last_message() == question_2b.message[-1].lower():
                     funcs.current_question = question_2b
                     if last_message() == "1":
                         print("ready")
@@ -560,7 +562,7 @@ def send_message():
                     else:
                         unrecognised.send_next()
                         question_2b.send()
-                elif last2nd_message() == question_3b.message[-1].lower():
+                elif bot_last_message() == question_3b.message[-1].lower():
                     funcs.current_question = question_3b
                     if last_message() == "1":
                         question_4b.send()
@@ -575,7 +577,7 @@ def send_message():
                     else:
                         unrecognised.send_next()
                         question_3b.send()
-                elif last2nd_message() == continue_with_gs.message[-1].lower():
+                elif bot_last_message() == continue_with_gs.message[-1].lower():
                     funcs.current_question = continue_with_gs
                     if last_message() == "1":
                         question_4b.send()
@@ -584,7 +586,7 @@ def send_message():
                     else:
                         unrecognised.send_next()
                         continue_with_gs.send()
-                elif last2nd_message() == question_4b.message[-1].lower():
+                elif bot_last_message() == question_4b.message[-1].lower():
                     funcs.current_question = question_4
                     if last_message() == "1":
                         question_2b.send()
@@ -597,7 +599,7 @@ def send_message():
                         unrecognised.send_next()
                         question_4b.send()
 
-                elif last2nd_message() == question_5b.message[-1].lower():
+                elif bot_last_message() == question_5b.message[-1].lower():
                     funcs.current_question = question_5b
                     if last_message() == "1" or last_message() == "2" or last_message() == "3":
                         question_2b.send()
@@ -715,5 +717,5 @@ code = funcs.genrate_code()
 while funcs.find:
     
     get_element()
-# print(opt._option(last_message() , last2nd_message()))
+# print(opt._option(last_message() , bot_last_message()))
     sleep(1)
