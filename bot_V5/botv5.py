@@ -26,7 +26,6 @@ funcs.validity = 30
 
 contacts = []
 filepath = os.getcwd()
-print(filepath)
 
 user = os.getlogin()
 
@@ -56,43 +55,44 @@ driver.get('https://web.whatsapp.com')
 
 input("enter")
 
-print(filepath)
-
 intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy']
 
 
-def Schedulecall(message):
-    try:
-        url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + get_contact() + ' ' + message
-        driver.get(url)
-        sleep(3)
-        click_btn = driver.find_element(By.XPATH,
-                                        '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(
-            Keys.ENTER)
-        sleep(1)
-        funcs.find = True
-    except:
-        sleep(1)
-        funcs.find = True
+class Schedulecall():
+    def __init__(self, m=None):
+        self.message = m
 
-
-def element(url):
-    element = driver.find_element(By.XPATH, url)
-
-    return element
+    def send(self):
+        try:
+            url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + get_contact() + ' ' + self.message
+            driver.get(url)
+            sleep(3)
+            click_btn = driver.find_element(By.XPATH,
+                                            '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(
+                Keys.ENTER)
+            sleep(1)
+            funcs.find = True
+        except:
+            sleep(1)
+            funcs.find = True
 
 
 def get_contact():
-    contact = element('//*[@id="main"]/header/div[2]/div/div').text
-    # contact = contact.split()
-    # contact = contact[-2] + contact[-1]
-
+    element = driver.find_element(By.XPATH, '//*[@id="main"]/header/div[2]/div/div')
+    contact = element.text
     return contact
+
+
+class save_contact():
+
+    def send(self):
+        contact_save.insert_contact(get_contact())
+        contact_save.contacts = get_contact()
 
 
 class Questions():
 
-    def __init__(self, message, op1=None, op2=None, op3=None , op4=None , op5 = None):
+    def __init__(self, message, op1=None, op2=None, op3=None, op4=None, op5=None):
         self.m = message
         self.op1 = op1
         self.op2 = op2
@@ -103,28 +103,37 @@ class Questions():
     def opt_check(self):
 
         print(f"running opt_check of Q:{self.m}")
-        if last_message() == "1":
+        if last_message() == "1" and self.op1:
             print(f"last_message():{last_message()} is equal to '1'")
             for q in self.op1:
                 q.send()
 
-        if last_message() == "2":
+        elif last_message() == "2" and self.op2:
             print(f"last_message():{last_message()} is equal to '2'")
             for q in self.op2:
                 q.send()
 
-        if last_message() == "3":
+        elif last_message() == "3" and self.op3 :
             print(f"last_message():{last_message()} is equal to '3'")
             for q in self.op3:
                 q.send()
-        if last_message() == "4":
+        elif last_message() == "4" and self.op4:
             print(f"last_message():{last_message()} is equal to '4'")
             for q in self.op4:
                 q.send()
-        if last_message() == "5":
+        elif last_message() == "5" and self.op5:
             print(f"last_message():{last_message()} is equal to '5'")
             for q in self.op5:
                 q.send()
+        else:
+            if is_new_message() and last_message() in intro:
+                question_1.send()
+                presentation_video.send()
+                question_2.send()
+            else :
+                if is_new_message():
+                    self.send()
+
 
     def send(self):
         for x in self.m:
@@ -145,7 +154,6 @@ class Questions():
             input_box[0].send_keys(Keys.ENTER)
 
         sleep(1)
-
 
 
 presentation_video = Questions(message=[
@@ -183,17 +191,21 @@ question_2 = Questions(message=[
 ])
 question_3 = Questions(message=[
     'HAVE YOU WATCHED THE VIDEO ?',
-    '1. YES',
-    '2. NOT YET'
+    '''
+1. YES
+2. NOT YET
+'''
 
 ])
 question_4 = Questions(message=[
     'WHICH PACKAGE WOULD YOU LIKE TO CHOOSE ? ',
     'To choose an Option TYPE 1 , 2 , 3 or 4 ',
-    '1. PLATINUM PACKAGE ',
-    '2. GOLD PACKAGE ',
-    '3. I HAVE MONEY PROBLEM',
-    '4. I HAVE A QUERY'
+    '''
+1. PLATINUM PACKAGE 
+2. GOLD PACKAGE 
+3. I HAVE MONEY PROBLEM
+4. I HAVE A QUERY
+'''
 
 ])
 
@@ -225,10 +237,12 @@ I get hundreds of interested people daily on my WhatsApp about this business but
 So, kindly confirm me by Tomorrow if you're starting. 😊👍🏻
 """,
     'To choose an Option TYPE 1 , 2 , 3 or 4 ',
-    '1. PLATINUM PACKAGE ',
-    '2. GOLD PACKAGE ',
-    '3. I HAVE DOUBTS',
-    '4. I WILL CONFIRM TOMORROW'
+    '''
+1. PLATINUM PACKAGE 
+2. GOLD PACKAGE 
+3. I HAVE DOUBTS
+4. I WILL CONFIRM TOMORROW
+'''
 ])
 question_1b = Questions(message=[
     'To choose an Option TYPE 1 or 2 '
@@ -247,8 +261,10 @@ money_problem = Questions(message=[
 ])
 question_3b = Questions(message=[
     'To choose an Option TYPE 1 or 2 ',
-    '1. I WILL ARRANGE MONEY',
-    '2. I WANT TO START WITH SILVER'
+    '''
+1. I WILL ARRANGE MONEY
+2. I WANT TO START WITH SILVER
+'''
 ])
 question_4b = Questions(message=[
     'To choose an Option TYPE 1 , 2 or 3 ',
@@ -280,28 +296,29 @@ https://leadsguru.in/?ref=Deepanshu29"
 question_7b = Questions(message=[
 
     '''
-    Phonpe Gpay Paytm
-    Same number (8619202808)
-    Send me screenshot after payment 😊
-    '''
+Phonpe Gpay Paytm
+Same number (8619202808)
+Send me screenshot after payment 😊
+'''
 
 ])
 continue_with_gs = Questions(message=[
+    '''
+DO YOU STILL WANT TO CONTINUE WITH GOLD OR SILVER?
+1. YES
+2. NO    
+'''
 
-    "DO YOU STILL WANT TO CONTINUE WITH GOLD OR SILVER? ",
-    "1. YES",
-    "2. NO"
 
 ])
 
 silver_disadvantage = Questions(message=[
     '''
-        Silver lite course hai
-        Jada kuch seekhne ko bhi nahi milega
-        Commission bhi kam hai
-        And you won't be able to attend my mentorship sessions in silver
-
-    '''
+Silver lite course hai
+Jada kuch seekhne ko bhi nahi milega
+Commission bhi kam hai
+And you won't be able to attend my mentorship sessions in silver
+'''
 ])
 
 call = Questions(message=[
@@ -333,40 +350,49 @@ end = Questions(message=[
     'thanks for giving your time :)'
 ])
 
-
 current_question = question_1
 
 
 def is_matched(a, b):
     r = SequenceMatcher(a=a.lower(), b=b.lower()).ratio()
     print(r)
-    if r >= 0.8:
+    print(a,b)
+
+    if r >= 0.9:
+
         return True
 
     return False
 
+
 def is_new_message():
     return not last_message() == bot_last_message().lower()
 
-def send_file(filepath):
-    image_url = '/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/div/ul/li[1]/button/input'
-    attach_url = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div'
-    send_button_url = '/html/body/div[1]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div'
-    attach_box = driver.find_element(By.XPATH, attach_url)
-    attach_box.click()
-    image_box = driver.find_element(By.XPATH, image_url)
-    image_box.send_keys(filepath)
-    sleep(1)
-    send_button = driver.find_element(By.XPATH, send_button_url)
-    send_button.click()
-    sleep(1)
+
+class send_file():
+    def __init__(self, filepath=None):
+        self.filepath = filepath
+
+    def send(self):
+        print(self.filepath)
+        image_url = '/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/div/ul/li[1]/button/input'
+        attach_url = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div'
+        send_button_url = '/html/body/div[1]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div'
+        attach_box = driver.find_element(By.XPATH, attach_url)
+        attach_box.click()
+        image_box = driver.find_element(By.XPATH, image_url)
+        image_box.send_keys(self.filepath)
+        sleep(1)
+        send_button = driver.find_element(By.XPATH, send_button_url)
+        send_button.click()
+        sleep(2)
 
     # question_15.send()
+
 
 def bot_last_message():
 
     lastmessage = driver.find_elements(By.CLASS_NAME, 'message-out')
-
 
     if lastmessage:
         lastmessage = lastmessage[-1].find_element(By.CLASS_NAME, '_1Gy50')
@@ -375,11 +401,11 @@ def bot_last_message():
 
         return message
     else:
-
-        question_1.send()
-        presentation_video.send()
-        question_2.send()
-
+        return None
+    # else:
+    #     question_1.send()
+    #     presentation_video.send()
+    #     question_2.send()
 
 
 def last_message():
@@ -391,13 +417,59 @@ def last_message():
     return message
 
 
-
-
 question_2.op1 = [question_3]
 question_2.op2 = [end]
 
 question_3.op1 = [question_4]
-question_3.op2=[presentation_video , question_7]
+question_3.op2 = [presentation_video, question_7]
+
+question_4.op1 = [question_2b, money_problem]
+question_4.op2 = [question_2b, money_problem]
+question_4.op3 = [question_3b]
+question_4.op4 = [question_5]
+
+money_problem.op1 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b,
+                     Schedulecall(m='lead is ready to pay'), save_contact]
+money_problem.op2 =[question_6b]
+money_problem.op3 =[question_3b]
+
+question_5.op1 = [send_file(filepath= filepath + r'\voicemails\money_problem.ogg') , question_4]
+question_5.op2 = [send_file(filepath=filepath + r'\voicemails\self_dout.ogg') , question_4]
+question_5.op3 = [send_file(filepath=filepath + r'\voicemails\way_to_earn.ogg') , question_4]
+question_5.op4 = [question_6]
+question_5.op5 = [call]
+
+call.op1 = [Schedulecall(m='wants to talk to you '),save_contact]
+
+question_6.op1 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') , question_2]
+
+question_7.op1 = [question_2b]
+question_7.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg') , question_1b]
+question_7.op3 =[question_5]
+question_7.op4 = [question_2 , question_7]
+
+question_1b.op1=[question_2b]
+question_1b.op2=[send_file(filepath=filepath+r'\voicemails\plat_pitch.ogg'),question_2b]
+
+question_2b.op1 =[send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b,
+                     Schedulecall(m='lead is ready to pay'), save_contact]
+question_2b.op2 = [question_6b]
+
+question_3b.op1 = [question_4b]
+question_3b.op2 = [send_file(filepath=filepath + "\screenshots\gold_ss.jpeg") , send_file(filepath=filepath + "\screenshots\plat_ss.jpeg") , send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg') , continue_with_gs]
+
+continue_with_gs.op1 = [question_4b]
+continue_with_gs.op2 = [question_5b]
+
+question_4b.op1 =[question_2b]
+question_4b.op2 = [silver_disadvantage,question_5b]
+question_4b.op3 = [question_7]
+
+question_5b.op1  = [question_2b]
+question_5b.op2  = [question_2b]
+question_5b.op3  = [question_2b]
+
+
 
 
 question_list = []
@@ -407,12 +479,18 @@ for obj in gc.get_objects():
         question_list.append(obj)
 
 
-
 def find_question():
-    for q in question_list:
-        if is_matched(q.m[-1], bot_last_message()):
-            q.opt_check()
-    return False
+    bot_message = bot_last_message()
+    if bot_message:
+        for q in question_list:
+            if is_matched(q.m[-1], bot_message):
+
+                q.opt_check()
+                return True
+        return False
+    else:
+        return False
+
 
 def send_message():
     # get_contact()
@@ -421,253 +499,11 @@ def send_message():
             if not contact_save.new_contact(get_contact()):
                 # find_question()
 
-                if not find_question() and is_new_message():
-                        print("this")
-                        question_1.send()
-                        presentation_video.send()
-                        question_2.send()
-            #     print(get_contact())
-            #     if last_message() in intro:
-            #         if get_contact() == "Rajendra":
-            #             # bot stop for a single user-----------------------------------------------------------
-            #             admin_commands.send()
-            #             print(last_message())
-            #
-            #
-            #         else:
-            #             question_1.send_next()
-            #             presentation_video.send_next()
-            #             sleep(1)
-            #             question_2.send()
-            #     elif last2nd_message() == admin_commands.message[-1].lower():
-            #
-            #         if "single-stop" in last_message():
-            #             message = str(last_message()).split()
-            #             message = message[0]
-            #             contact_save.insert_contact(message)
-            #             contact_save.contacts = get_contact()
-            #
-            #             sleep(1)
-            #             Schedulecall(' stoped for -' + message)
-            #
-            #             print(message)
-            #
-            #     elif last2nd_message() == question_2.message[-1].lower():
-            #         funcs.current_question = question_2
-            #         if last_message() == "1":
-            #             question_3.send()
-            #         elif last_message() == "2":
-            #             end()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_2.send()
-            #
-            #
-            #     elif last2nd_message() == question_3.message[-1].lower():
-            #         funcs.current_question = question_3
-            #         if last_message() == "1":
-            #             question_4.send()
-            #
-            #         elif last_message() == "2":
-            #             presentation_video.send_next()
-            #             question_7.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_3.send()
-            #     elif last2nd_message() == question_4.message[-1].lower():
-            #         funcs.current_question = question_4
-            #         if last_message() == "1":
-            #             question_2b.send_next()
-            #             money_problem.send()
-            #         elif last_message() == "2":
-            #             question_2b.send_next()
-            #             money_problem.send()
-            #         elif last_message() == "3":
-            #             question_3b.send()
-            #         elif last_message() == "4":
-            #             question_5.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_4.send()
-            #
-            #     elif last2nd_message() == money_problem.message[-1].lower():
-            #         if last_message() == "1":
-            #             contact_save.insert_contact(get_contact())
-            #             contact_save.contacts = get_contact()
-            #             send_file(filepath + r'\voicemails\after_sale.ogg')
-            #             sleep(1)
-            #             question_7b.send_next()
-            #             sleep(1)
-            #             Schedulecall('lead is ready to pay ')
-            #         if last_message() == "2":
-            #             question_6b.send()
-            #         if last_message() == "3":
-            #             question_3b.send()
-            #         else:
-            #             question_4.send_next()
-            #             money_problem.send()
-            #
-            #
-            #     elif last2nd_message() == question_5.message[-1].lower():
-            #         funcs.current_question = question_5
-            #         if last_message() == "1":
-            #             send_file(filepath + r'\voicemails\money_problem.ogg')
-            #             sleep(1)
-            #             question_4.send()
-            #         elif last_message() == "2":
-            #             send_file(filepath + r'\voicemails\self_dout.ogg')
-            #             sleep(1)
-            #             question_4.send()
-            #         elif last_message() == "3":
-            #             send_file(filepath + r'\voicemails\way_to_earn.ogg')
-            #             sleep(1)
-            #             question_4.send()
-            #         elif last_message() == "4":
-            #             question_6.send()
-            #         elif last_message() == "5":
-            #             call.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_5.send()
-            #     elif last2nd_message() == call.message[-1].lower():
-            #         if last_message() == "1":
-            #
-            #             funcs.current_question = call
-            #             contact_save.insert_contact(get_contact())
-            #             contact_save.contacts = get_contact()
-            #             Schedule_call.send_next()
-            #             sleep(1)
-            #             Schedulecall('wants to talk to you ')
-            #         else:
-            #             unrecognised.send_next()
-            #             call.send()
-            #
-            #     elif last2nd_message() == question_6.message[-1].lower():
-            #         funcs.current_question = question_6
-            #         if last_message() == "1" or last_message() == "2":
-            #             print("queation 2")
-            #             # trust issue  --------------------------------------
-            #
-            #             send_file(filepath + r'\voicemails\trust_issue.ogg')
-            #             sleep(1)
-            #             question_2.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_6.send()
-            #
-            #
-            #
-            #     # section-2 -----------------------------------------------------------------
-            #     elif last2nd_message() == question_7.message[-1].lower():
-            #         funcs.current_question = question_7
-            #         if last_message() == "1":
-            #             question_2b.send()
-            #         elif last_message() == "2":
-            #             send_file(filepath + r'\voicemails\plat_pitch.ogg')
-            #             sleep(1)
-            #             question_1b.send()
-            #         elif last_message() == "3":
-            #             question_5.send()
-            #         elif last_message() == "4":
-            #             question_2.send()
-            #             question_7.send()
-            #
-            #     elif last2nd_message() == question_1b.message[-1].lower():
-            #         funcs.current_question = question_1b
-            #         if last_message() == "1":
-            #             question_2b.send()
-            #         elif last_message() == "2":
-            #             # send_file(filepath+r'\voicemails\plat_pitch.ogg')
-            #             question_2b.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_1b.send()
-            #
-            #
-            #     # payment------------------------------------------------------------
-            #     elif last2nd_message() == question_2b.message[-1].lower():
-            #         funcs.current_question = question_2b
-            #         if last_message() == "1":
-            #             print("ready")
-            #             contact_save.insert_contact(get_contact())
-            #             contact_save.contacts = get_contact()
-            #             send_file(filepath + r'\voicemails\after_sale.ogg')
-            #             sleep(1)
-            #             question_7b.send_next()
-            #             sleep(1)
-            #             Schedulecall('lead is ready to pay ')
-            #         elif last_message() == "2":
-            #             question_6b.send()
-            #
-            #             # question_9.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_2b.send()
-            #     elif last2nd_message() == question_3b.message[-1].lower():
-            #         funcs.current_question = question_3b
-            #         if last_message() == "1":
-            #             question_4b.send()
-            #         elif last_message() == "2":
-            #             send_file(filepath + "\screenshots\gold_ss.jpeg")
-            #             send_file(filepath + "\screenshots\plat_ss.jpeg")
-            #             sleep(1)
-            #             send_file(filepath + r'\voicemails\plat_pitch.ogg')
-            #
-            #             sleep(2)
-            #             continue_with_gs.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_3b.send()
-            #     elif last2nd_message() == continue_with_gs.message[-1].lower():
-            #         funcs.current_question = continue_with_gs
-            #         if last_message() == "1":
-            #             question_4b.send()
-            #         elif last_message() == "2":
-            #             question_5b.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             continue_with_gs.send()
-            #     elif last2nd_message() == question_4b.message[-1].lower():
-            #         funcs.current_question = question_4
-            #         if last_message() == "1":
-            #             question_2b.send()
-            #         elif last_message() == "2":
-            #             silver_disadvantage.send_next()
-            #             question_5b.send()
-            #         elif last_message() == "3":
-            #             question_7.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_4b.send()
-            #
-            #     elif last2nd_message() == question_5b.message[-1].lower():
-            #         funcs.current_question = question_5b
-            #         if last_message() == "1" or last_message() == "2" or last_message() == "3":
-            #             question_2b.send()
-            #         else:
-            #             unrecognised.send_next()
-            #             question_5b.send()
-            #
-            #
-            #
-            #
-            #
-            #     # bot stop ----------------------------------------------------------------------------------
-            #     elif last_message() == "admin-stop":
-            #         stop_bot.send_next()
-            #         funcs.stop = True
-            #     else:
-            #
-            #         question_1.send_next()
-            #         presentation_video.send_next()
-            #         sleep(1)
-            #         question_2.send()
-            #
-            #     sleep(1)
-            #     funcs.find = True
-            # else:
-            #     sleep(1)
-            #     funcs.find = True
+                if not find_question():
+                    print("this")
+                    question_1.send()
+                    presentation_video.send()
+                    question_2.send()
 
         else:
             if last_message() == "admin-start":
@@ -703,6 +539,7 @@ def get_element():
 
             # if not elements() in contacts:
             if (greendot):
+
                 parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,
                                                                                                             "..").find_element(
                     By.XPATH, "..")
@@ -714,24 +551,24 @@ def get_element():
 
                 if not find_date(parent):
 
-                    if not cont_check:
+                    if not cont_check and not is_new_message():
 
                         greendot[-1].click()
-                        sleep(1)
+                        # sleep(1)
                         send_message()
                     else:
-                        sleep(1)
+                        # sleep(1)
                         send_message()
                 else:
-                    sleep(1)
+                    # sleep(1)
                     send_message()
 
             else:
-                sleep(1)
+                # sleep(1)
                 send_message()
 
         except:
-            sleep(2)
+            # sleep(2)
             funcs.find = True
     else:
         print("out")
@@ -744,10 +581,9 @@ def get_element():
             funcs.validity = int(message[2])
 
 
-
-
 code = funcs.genrate_code()
 
 while funcs.find:
-    sleep(1)
+
     get_element()
+
