@@ -84,7 +84,9 @@ def get_contact():
 
 class save_contact():
 
+
     def send(self):
+        print("save number")
         contact_save.insert_contact(get_contact())
         contact_save.contacts = get_contact()
 
@@ -102,35 +104,37 @@ class Questions():
 
     def opt_check(self):
 
+        lm = last_message()
+
         print(f"running opt_check of Q:{self.m}")
-        if last_message() == "1" and self.op1:
+        if lm  == "1" and self.op1:
             print(f"last_message():{last_message()} is equal to '1'")
             for q in self.op1:
                 q.send()
 
-        elif last_message() == "2" and self.op2:
+        elif lm == "2" and self.op2:
             print(f"last_message():{last_message()} is equal to '2'")
             for q in self.op2:
                 q.send()
 
-        elif last_message() == "3" and self.op3 :
+        elif lm == "3" and self.op3 :
             print(f"last_message():{last_message()} is equal to '3'")
             for q in self.op3:
                 q.send()
-        elif last_message() == "4" and self.op4:
+        elif lm == "4" and self.op4:
             print(f"last_message():{last_message()} is equal to '4'")
             for q in self.op4:
                 q.send()
-        elif last_message() == "5" and self.op5:
+        elif lm == "5" and self.op5:
             print(f"last_message():{last_message()} is equal to '5'")
             for q in self.op5:
                 q.send()
-        elif last_message() == "6" and self.op6:
+        elif lm == "6" and self.op6:
             print(f"last_message():{last_message()} is equal to '5'")
             for q in self.op6:
                 q.send()
         else:
-            if is_new_message() and last_message() in intro:
+            if is_new_message() and lm in intro:
                 question_1.send()
                 presentation_video.send()
                 question_2.send()
@@ -424,13 +428,18 @@ def bot_last_message():
 
 
 def last_message():
+
     lastmessage = driver.find_elements(By.CLASS_NAME, '_1Gy50')
 
-    message = lastmessage[-1].text
-    message = str(message.lower())
+    if lastmessage:
 
-    return message
+        message = lastmessage[-1].text
+        message = str(message.lower())
 
+        return message
+
+    else:
+        return False
 
 question_2.op1 = [question_3]
 question_2.op2 = [end , Schedulecall(m='is not intrested')]
@@ -501,9 +510,9 @@ def find_question():
     if bot_message:
         for q in question_list:
             if is_matched(q.m[-1], bot_message):
-
-                q.opt_check()
-                return True
+                if last_message():
+                    q.opt_check()
+                    return True
         return False
     else:
         return False
