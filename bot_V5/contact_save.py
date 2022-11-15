@@ -41,6 +41,3 @@ def new_contact(cont):
 
 
 
-
-
-insert_contact("Rajvendra")

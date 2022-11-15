@@ -66,12 +66,11 @@ class Schedulecall():
         try:
             url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + get_contact() + ' ' + self.message
             driver.get(url)
-            sleep(3)
-            click_btn = driver.find_element(By.XPATH,
-                                            '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').send_keys(
-                Keys.ENTER)
+            sleep(10)
+            click_btn = driver.find_element(By.XPATH,'//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button')
+            click_btn.click()
             sleep(1)
-            funcs.find = True
+
         except:
             sleep(1)
             funcs.find = True
@@ -92,13 +91,14 @@ class save_contact():
 
 class Questions():
 
-    def __init__(self, message, op1=None, op2=None, op3=None, op4=None, op5=None):
+    def __init__(self, message, op1=None, op2=None, op3=None, op4=None, op5=None , op6=None):
         self.m = message
         self.op1 = op1
         self.op2 = op2
         self.op3 = op3
         self.op4 = op4
         self.op5 = op5
+        self.op6 = op6
 
     def opt_check(self):
 
@@ -124,6 +124,10 @@ class Questions():
         elif last_message() == "5" and self.op5:
             print(f"last_message():{last_message()} is equal to '5'")
             for q in self.op5:
+                q.send()
+        elif last_message() == "6" and self.op6:
+            print(f"last_message():{last_message()} is equal to '5'")
+            for q in self.op6:
                 q.send()
         else:
             if is_new_message() and last_message() in intro:
@@ -158,7 +162,7 @@ class Questions():
 
 presentation_video = Questions(message=[
 
-    '''
+'''
 How to earn upto 30000/-  to 40000/- per month from Social media
 😇 Work From Home 😇
 👇🏻👇🏻👇🏻
@@ -168,13 +172,21 @@ Watch the full presentation without any distractions and get back to me by typin
 😇
 My Instagram Handle 👇🏻
 https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
-I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 
-hours everyday.
+*I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 
+hours everyday.*
 So watch it till the very end and after you have watched the full video
 Message me I'd be happy to help you out! 😇
 Note: Message me within 24 hours otherwise I won't be able to help you out. 
 I hope you value the given time. 🥰
 '''
+
+])
+
+presentation_link = Questions(message=[
+    '''
+PRESENTATION VIDEO
+https://youtu.be/PfJuuQJvGjM
+    '''
 
 ])
 
@@ -216,12 +228,15 @@ question_5 = Questions(message=[
     '2. SELF DOUBT',
     '3. HOW TO EARN THROUGH LEADSGURU?',
     '4. TRUST ISSUE',
-    '5. I HAVE ANOTHER QUERY'
+    '5. I HAVE ANOTHER QUERY',
+    '6. WHAT TO DO AFTER BUYING THE PACKAGE'
 ])
 question_6 = Questions(message=[
     'To choose an Option TYPE 1 or 2 ',
-    '1. TRUST ISSUE WITH ME ?',
-    '2. TRUST ISSUE WITH COMPANY?'
+    '''
+1. TRUST ISSUE WITH ME ?
+2. TRUST ISSUE WITH COMPANY?
+    '''
 
 ])
 insta_profile = Questions(message=[
@@ -418,14 +433,14 @@ def last_message():
 
 
 question_2.op1 = [question_3]
-question_2.op2 = [end]
+question_2.op2 = [end , Schedulecall(m='is not intrested')]
 
 question_3.op1 = [question_4]
-question_3.op2 = [presentation_video, question_7]
+question_3.op2 = [presentation_link, question_3]
 
 question_4.op1 = [question_2b, money_problem]
 question_4.op2 = [question_2b, money_problem]
-question_4.op3 = [question_3b]
+question_4.op3 = [send_file(filepath= filepath + r'\voicemails\money_problem.ogg') ,question_3b]
 question_4.op4 = [question_5]
 
 money_problem.op1 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b,
@@ -438,10 +453,12 @@ question_5.op2 = [send_file(filepath=filepath + r'\voicemails\self_dout.ogg') , 
 question_5.op3 = [send_file(filepath=filepath + r'\voicemails\way_to_earn.ogg') , question_4]
 question_5.op4 = [question_6]
 question_5.op5 = [call]
+question_5.op6 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg') , question_4]
 
 call.op1 = [Schedulecall(m='wants to talk to you '),save_contact]
 
-question_6.op1 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') , question_2]
+question_6.op1 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') ,  insta_profile ,question_2 ]
+question_6.op2 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg')  , insta_profile , question_2]
 
 question_7.op1 = [question_2b]
 question_7.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg') , question_1b]
@@ -494,12 +511,16 @@ def find_question():
 
 def send_message():
     # get_contact()
-    if not last_message() == bot_last_message():
+    if bot_last_message() == None:
+        question_1.send()
+        presentation_video.send()
+        question_2.send()
+    elif not last_message() == bot_last_message():
         if not funcs.stop:
             if not contact_save.new_contact(get_contact()):
                 # find_question()
 
-                if not find_question():
+                if not find_question() and is_new_message():
                     print("this")
                     question_1.send()
                     presentation_video.send()
