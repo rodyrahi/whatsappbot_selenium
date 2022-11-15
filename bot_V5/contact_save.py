@@ -4,10 +4,10 @@ from datetime import date
 contacts = ["", "y"]
 
 filename = "contacts.csv"
-import pandas as pd
 
 
 def insert_contact(cont):
+
 
     # rows = [cont +'-'+ date.today() , cont]
     rows = [str(cont).lower()]
@@ -20,7 +20,6 @@ def insert_contact(cont):
         # writing the data rows
         csvwriter.writerow(rows)
 
-    df = pd.read_csv('contacts.csv')
 
 
 
@@ -38,7 +37,6 @@ def new_contact(cont):
                 continue
 
         return False
-
 
 
 

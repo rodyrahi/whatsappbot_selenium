@@ -55,7 +55,7 @@ driver.get('https://web.whatsapp.com')
 
 input("enter")
 
-intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy']
+intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy','hy','hlo' , 'hallo']
 
 
 class Schedulecall():
@@ -135,7 +135,8 @@ class Questions():
                 q.send()
         else:
             if is_new_message() and lm in intro:
-                question_1.send()
+                send_file(filepath=filepath+r'\voicemails\intro_note.ogg').send()
+
                 presentation_video.send()
                 question_2.send()
             else :
@@ -167,21 +168,14 @@ class Questions():
 presentation_video = Questions(message=[
 
 '''
-How to earn upto 30000/-  to 40000/- per month from Social media
-😇 Work From Home 😇
-👇🏻👇🏻👇🏻
+
 PRESENTATION VIDEO
 https://youtu.be/PfJuuQJvGjM
 Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"
 😇
 My Instagram Handle 👇🏻
 https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
-*I've earned more than 12 LAKH+ in 12 months by just using social media for 2-3 
-hours everyday.*
-So watch it till the very end and after you have watched the full video
-Message me I'd be happy to help you out! 😇
-Note: Message me within 24 hours otherwise I won't be able to help you out. 
-I hope you value the given time. 🥰
+
 '''
 
 ])
@@ -341,7 +335,17 @@ And you won't be able to attend my mentorship sessions in silver
 ])
 
 call = Questions(message=[
-    '1. SCHEDULE A CALL "it might take a while"'
+'''
+SCHEDULE A CALL "it might take a while"
+1. YES
+2. NO
+'''
+
+])
+call_scheduled = Questions(message=[
+'''
+Your Call has been scheduled! You will be contacted within 12 hours. 😇  
+'''
 
 ])
 
@@ -460,14 +464,14 @@ money_problem.op3 =[question_3b]
 question_5.op1 = [send_file(filepath= filepath + r'\voicemails\money_problem.ogg') , question_4]
 question_5.op2 = [send_file(filepath=filepath + r'\voicemails\self_dout.ogg') , question_4]
 question_5.op3 = [send_file(filepath=filepath + r'\voicemails\way_to_earn.ogg') , question_4]
-question_5.op4 = [question_6]
+question_5.op4 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') ,  insta_profile ,question_2 ]
 question_5.op5 = [call]
 question_5.op6 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg') , question_4]
 
-call.op1 = [Schedulecall(m='wants to talk to you '),save_contact]
-
-question_6.op1 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') ,  insta_profile ,question_2 ]
-question_6.op2 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg')  , insta_profile , question_2]
+call.op1 = [call_scheduled,Schedulecall(m='wants to talk to you '),save_contact  ]
+call.op2 = [question_4]
+# question_6.op1 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') ,  insta_profile ,question_2 ]
+# question_6.op2 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg')  , insta_profile , question_2]
 
 question_7.op1 = [question_2b]
 question_7.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg') , question_1b]
@@ -519,31 +523,35 @@ def find_question():
 
 
 def send_message():
-    # get_contact()
-    if bot_last_message() == None:
-        question_1.send()
-        presentation_video.send()
-        question_2.send()
-    elif not last_message() == bot_last_message():
-        if not funcs.stop:
-            if not contact_save.new_contact(get_contact()):
-                # find_question()
+    if last_message() == 'admin-stop' and get_contact() == "rajvendra":
+        funcs.stop = True
 
-                if not find_question() and is_new_message():
-                    print("this")
-                    question_1.send()
-                    presentation_video.send()
-                    question_2.send()
+    # get_contact()
+    if funcs.stop is False:
+        if bot_last_message() == None:
+            send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
+            presentation_video.send()
+            question_2.send()
+        elif not last_message() == bot_last_message():
+            if not funcs.stop:
+                if not contact_save.new_contact(get_contact()):
+                    # find_question()
+
+                    if not find_question() and is_new_message():
+                        print("this")
+                        send_file(filepath=filepath+r'\voicemails\intro_note.ogg').send()
+                        presentation_video.send()
+                        question_2.send()
+
+            else:
+                if last_message() == "admin-start":
+                    start_bot.send()
+                    funcs.stop = False
+                    funcs.find = True
+                funcs.find = True
 
         else:
-            if last_message() == "admin-start":
-                start_bot.send()
-                funcs.stop = False
-                funcs.find = True
             funcs.find = True
-
-    else:
-        funcs.find = True
 
 
 def find_date(parent):
@@ -616,4 +624,3 @@ code = funcs.genrate_code()
 while funcs.find:
 
     get_element()
-
