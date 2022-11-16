@@ -3,7 +3,7 @@ from datetime import date
 
 contacts = ["", "y"]
 
-filename = "contacts.csv"
+filename = "contacts1.csv"
 
 
 
@@ -42,5 +42,3 @@ def new_contact(cont):
 
 
 
-
-insert_contact("Rajvendra")

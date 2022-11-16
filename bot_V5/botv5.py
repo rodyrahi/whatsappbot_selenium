@@ -5,8 +5,9 @@ import time
 
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import contact_save
-import fuctions as funcs
+from bot_V5 import contact_save
+from bot_V5 import fuctions as funcs
+
 from selenium.webdriver import Keys
 from time import sleep
 from selenium import webdriver
@@ -361,7 +362,7 @@ stop_bot = Questions(message=[
     'Bot is stopped'
 ])
 start_bot = Questions(message=[
-    'bot-started'
+    'Bot is started'
 ])
 validity = Questions(message=[
     'your validity is over please re subscribe'
@@ -468,7 +469,7 @@ question_5.op4 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') 
 question_5.op5 = [call]
 question_5.op6 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg') , question_4]
 
-call.op1 = [call_scheduled,Schedulecall(m='wants to talk to you '),save_contact  ]
+call.op1 = [call_scheduled,Schedulecall(m='wants to talk to you '),save_contact ]
 call.op2 = [question_4]
 # question_6.op1 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') ,  insta_profile ,question_2 ]
 # question_6.op2 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg')  , insta_profile , question_2]
@@ -523,11 +524,12 @@ def find_question():
 
 
 def send_message():
-    if last_message() == 'admin-stop' and get_contact() == "rajvendra":
+
+    if last_message() == 'admin-stop':
+        stop_bot.send()
         funcs.stop = True
 
-    # get_contact()
-    if funcs.stop is False:
+    else:
         if bot_last_message() == None:
             send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
             presentation_video.send()
@@ -569,54 +571,56 @@ def find_date(parent):
 
 def get_element():
     # finding green dot
+    if funcs.stop is True:
+        if last_message() == 'admin-start':
+            start_bot.send()
+            funcs.stop = False
 
-    if funcs.validity > 0:
-        try:
-            sleep(1)
-            greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
 
-            # if not elements() in contacts:
-            if (greendot):
 
-                parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,
-                                                                                                            "..").find_element(
-                    By.XPATH, "..")
-                parent = parent.text.split()
+    # get_contact()
+    if funcs.stop is False:
 
-                cont_check = contact_save.new_contact(parent[0].lower())
 
-                find_date(parent)
+            try:
 
-                if not find_date(parent):
+                sleep(1)
+                greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
 
-                    if not cont_check and not is_new_message():
+                # if not elements() in contacts:
+                if (greendot):
+                    print("ppppp")
+                    parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,
+                                                                                                                "..").find_element(
+                        By.XPATH, "..")
+                    parent = parent.text.split()
 
-                        greendot[-1].click()
-                        # sleep(1)
-                        send_message()
+                    cont_check = contact_save.new_contact(parent[0].lower())
+
+                    find_date(parent)
+
+                    if not find_date(parent):
+
+                        if not cont_check and not is_new_message():
+
+                            greendot[-1].click()
+                            # sleep(1)
+                            send_message()
+                        else:
+                            # sleep(1)
+                            send_message()
                     else:
                         # sleep(1)
                         send_message()
+
                 else:
                     # sleep(1)
                     send_message()
 
-            else:
-                # sleep(1)
-                send_message()
+            except:
+                # sleep(2)
+                funcs.find = True
 
-        except:
-            # sleep(2)
-            funcs.find = True
-    else:
-        print("out")
-        greendot = driver.find_elements(By.CLASS_NAME, "_1pJ9J")
-        greendot[-1].click()
-        message = last_message().split('-')
-        print(message)
-
-        if message == code:
-            funcs.validity = int(message[2])
 
 
 code = funcs.genrate_code()

@@ -1,9 +1,9 @@
 import csv
 from datetime import date
 
-contacts = ["", "y"]
+contacts = ["y"]
 
-filename = "contacts.csv"
+filename = 'bot_V5/contacts.csv'
 
 
 def insert_contact(cont):
@@ -24,6 +24,7 @@ def insert_contact(cont):
 
 
 
+
 def new_contact(cont):
 
     with open(filename, 'r',newline='') as f:
@@ -37,7 +38,6 @@ def new_contact(cont):
                 continue
 
         return False
-
 
 
 
