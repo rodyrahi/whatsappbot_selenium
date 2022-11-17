@@ -501,7 +501,7 @@ call.op2 = [question_4]
 question_7.op1 = [question_2b]
 question_7.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), question_1b]
 question_7.op3 = [question_5]
-question_7.op4 = [question_2, question_7]
+question_7.op4 = [question_2]
 
 question_1b.op1 = [question_2b]
 question_1b.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), question_2b]
