@@ -390,6 +390,9 @@ validity = Questions(message=[
 admin_commands = Questions(message=[
     'you are admin'
 ])
+single_stop = Questions(message=[
+    'bot is stopped for the client'
+])
 end = Questions(message=[
     'thanks for giving your time :)'
 ])
@@ -543,6 +546,17 @@ def send_message():
         stop_bot.send()
         funcs.stop = True
 
+
+    if "single-stop" in last_message():
+        message = str(last_message()).split()
+        message = message[0]
+        contact_save.insert_contact(message)
+        contact_save.contacts = get_contact()
+
+        single_stop.send()
+
+        print(message)
+
     else:
         if bot_last_message() == None:
             send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
@@ -604,11 +618,12 @@ def get_element():
                 parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,
                                                                                                             "..").find_element(
                     By.XPATH, "..")
-                parent = parent.text.split()
+                parent = parent.find_element(By.CLASS_NAME , "_3q9s6")
 
-                cont_check = contact_save.new_contact(parent[0].lower())
+                cont_check = contact_save.new_contact(parent.text.lower())
 
                 find_date(parent)
+
 
                 if not find_date(parent):
 
