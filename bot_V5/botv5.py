@@ -45,6 +45,7 @@ driver.get('https://web.whatsapp.com')
 
 
 input("enter")
+print(filepath)
 
 intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy', 'hy', 'hlo', 'hallo']
 
@@ -128,45 +129,52 @@ class Questions():
         self.op6 = op6
 
     def opt_check(self):
+        if not last_message() == bot_last_message():
+            lm = last_message()
 
-        lm = last_message()
 
 
-        if lm == "1" and self.op1:
+            if lm == "1" and self.op1:
 
-            for q in self.op1:
-                q.send()
+                for q in self.op1:
+                    q.send()
 
-        elif lm == "2" and self.op2:
+            elif lm == "2" and self.op2:
 
-            for q in self.op2:
-                q.send()
+                for q in self.op2:
+                    q.send()
 
-        elif lm == "3" and self.op3:
+            elif lm == "3" and self.op3:
 
-            for q in self.op3:
-                q.send()
-        elif lm == "4" and self.op4:
+                for q in self.op3:
+                    q.send()
+            elif lm == "4" and self.op4:
 
-            for q in self.op4:
-                q.send()
-        elif lm == "5" and self.op5:
+                for q in self.op4:
+                    q.send()
+            elif lm == "5" and self.op5:
 
-            for q in self.op5:
-                q.send()
-        elif lm == "6" and self.op6:
+                for q in self.op5:
+                    q.send()
+            elif lm == "6" and self.op6:
 
-            for q in self.op6:
-                q.send()
-        else:
-            if is_new_message() and lm in intro:
-                send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
-
-                presentation_video.send()
-                question_2.send()
+                for q in self.op6:
+                    q.send()
             else:
-                if is_new_message():
-                    self.send()
+                if last_message() == "1" or last_message()=="2" or last_message()=="3" or last_message() == "4" or last_message() == "5" or last_message()=="6":
+
+                    return
+                else:
+                    print("not matched")
+
+                    if is_new_message() and lm in intro:
+                        send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
+
+                        presentation_video.send()
+                        question_2.send()
+                    else:
+                        if is_new_message():
+                            self.send()
 
     def send(self):
         for x in self.m:
@@ -350,10 +358,10 @@ DO YOU STILL WANT TO CONTINUE WITH GOLD OR SILVER?
 
 silver_disadvantage = Questions(message=[
     '''
-Silver lite course hai
-Jada kuch seekhne ko bhi nahi milega
-Commission bhi kam hai
-And you won't be able to attend my mentorship sessions in silver
+Silver lite Course hai...
+Jada kuch Seekhne ko bhi Nahi Milega
+Commission bhi Kam hai..
+And you Won't be able to Attend my Mentorship Sessions in Silver.
 '''
 ])
 
@@ -424,6 +432,7 @@ class send_file():
         self.filepath = filepath
 
     def send(self):
+        print(self.filepath)
 
         image_url = '/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/div/ul/li[1]/button/input'
         attach_url = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div'
@@ -506,9 +515,10 @@ question_7.op4 = [question_2]
 question_1b.op1 = [question_2b]
 question_1b.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), question_2b]
 
-question_2b.op1 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b, save_contact,
+question_2b.op1 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b, save_contact(),
                    Schedulecall(m='lead is ready to pay')]
-question_2b.op2 = [question_6b]
+question_2b.op2 = [question_6b,save_contact(),
+                   Schedulecall(m='lead is ready to pay')]
 
 question_3b.op1 = [question_4b]
 question_3b.op2 = [send_file(filepath=filepath + "\screenshots\gold_ss.jpeg"),
@@ -634,8 +644,10 @@ def get_element():
                                                                                                             "..").find_element(
                     By.XPATH, "..")
                 parent = parent.find_element(By.CLASS_NAME , "_3q9s6")
+                parent = parent.text.split()
+                print(parent)
 
-                cont_check = contact_save.new_contact(parent.text.lower())
+                cont_check = contact_save.new_contact(parent[0].lower())
 
                 find_date(parent)
 
@@ -666,4 +678,5 @@ def get_element():
 code = funcs.genrate_code()
 
 while funcs.find:
+    sleep(1)
     get_element()
