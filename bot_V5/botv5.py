@@ -1,6 +1,6 @@
 import csv
 from difflib import SequenceMatcher
-
+import pandas as pd
 
 import time
 
@@ -107,7 +107,9 @@ class save_contact():
 
             return False
 
-
+    def drop_col(self, cont):
+        data = pd.read_csv('contacts.csv')
+        data = data.drop(labels=cont, axis=1)
     def send(self):
         print("save number")
         self.insert_contact(get_contact())
@@ -393,6 +395,9 @@ admin_commands = Questions(message=[
 single_stop = Questions(message=[
     'bot is stopped for the client'
 ])
+single_start = Questions(message=[
+    'bot is started for the client'
+])
 end = Questions(message=[
     'thanks for giving your time :)'
 ])
@@ -478,7 +483,7 @@ question_4.op3 = [send_file(filepath=filepath + r'\voicemails\money_problem.ogg'
 question_4.op4 = [question_5]
 
 money_problem.op1 = [save_contact() ,send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b , Schedulecall(m="lead is ready to pay")]
-money_problem.op2 = [question_6b]
+money_problem.op2 = [[save_contact() ,send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_6b , Schedulecall(m="lead is ready to pay using link")]]
 money_problem.op3 = [question_3b]
 
 question_5.op1 = [send_file(filepath=filepath + r'\voicemails\money_problem.ogg'), question_4]
@@ -488,7 +493,7 @@ question_5.op4 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg'),
 question_5.op5 = [call]
 question_5.op6 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_4]
 
-call.op1 = [call_scheduled, Schedulecall(m='wants to talk to you '), save_contact]
+call.op1 = [call_scheduled, Schedulecall(m='wants to talk to you '), save_contact()]
 call.op2 = [question_4]
 # question_6.op1 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg') ,  insta_profile ,question_2 ]
 # question_6.op2 = [send_file(filepath=filepath + r'\voicemails\trust_issue.ogg')  , insta_profile , question_2]
@@ -554,6 +559,16 @@ def send_message():
         contact_save.contacts = get_contact()
 
         single_stop.send()
+
+        print(message)
+
+    if "single-start" in last_message():
+        message = str(last_message()).split()
+        message = message[0]
+        save_contact().drop_col(message)
+
+
+        single_start.send()
 
         print(message)
 

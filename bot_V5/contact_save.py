@@ -1,4 +1,5 @@
 import csv
+
 import os
 from datetime import date
 
@@ -34,8 +35,6 @@ def new_contact(cont):
         return False
 
 
-class test():
-    def send(self):
-        print("raj")
+
 
 
