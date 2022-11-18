@@ -616,8 +616,8 @@ def find_parents(greendot):
             "..").find_element(
             By.XPATH, "..")
         parent = parent.find_element(By.CLASS_NAME, "_3q9s6")
-        print(parent.text)
-        if find_no(str(parent.text.lower())) and not parent.text.lower() == "my personal":
+        print(str(parent.text.lower()))
+        if find_no(str(parent.text.lower())) or parent.text.lower() == "rajvendra":
             return dots
 
     return None
@@ -651,29 +651,34 @@ def get_element():
                                                                                                             "..").find_element(
                     By.XPATH, "..")
                 parent = parent.find_element(By.CLASS_NAME , "_3q9s6")
-                parent = parent.text.split()
-                print(parent)
-
-                cont_check = contact_save.new_contact(parent[0].lower())
-
+                parent = str(parent.text.lower())
+                parent = parent.replace(" " , "")
+                parent = parent.replace("+91", "")
 
 
-                dot = find_parents(greendot)
-                if dot:
 
-                    if not cont_check and not is_new_message():
-                        dot.click()
-                        # sleep(1)
-                        send_message()
+                print(parent , "this")
+
+                cont_check = contact_save.new_contact(parent)
+
+                if not cont_check:
+
+                    dot = find_parents(greendot)
+                    if dot:
+
+                        if not is_new_message():
+                            dot.click()
+                            # sleep(1)
+                            send_message()
+                        else:
+                            # sleep(1)
+                            send_message()
                     else:
+
+
+
                         # sleep(1)
                         send_message()
-                else:
-
-
-
-                    # sleep(1)
-                    send_message()
 
             else:
                 # sleep(1)
