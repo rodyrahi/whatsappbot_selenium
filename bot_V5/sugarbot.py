@@ -2,6 +2,7 @@ import os
 from difflib import SequenceMatcher
 from time import sleep
 import gc
+
 from selenium.webdriver import Keys
 
 import contact_save
@@ -164,7 +165,7 @@ def get_element():
 
             cont_check = contact_save.new_contact(parent[0].lower())
 
-            if not cont_check:
+            if not cont_check :
 
                 greendot[-1].click()
                 sleep(1)

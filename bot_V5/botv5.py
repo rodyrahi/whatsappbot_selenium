@@ -1,7 +1,7 @@
 import csv
 from difflib import SequenceMatcher
 import pandas as pd
-
+from defs import *
 import time
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -599,17 +599,19 @@ def send_message():
             funcs.find = True
 
 
-def find_date(parent):
-    # for x in parent:
-    #     try:
-    #         if len(x) > 4 and bool(parse(x)):
-    #             print("True")
-    #             return True
-    #
-    #     except:
-    #         continue
-    # print("False")
-    return False
+def find_parents(greendot):
+    for dots in greendot:
+        parent = dots.find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(
+            By.XPATH,
+            "..").find_element(
+            By.XPATH, "..")
+        parent = parent.find_element(By.CLASS_NAME, "_3q9s6")
+        if find_no(str(parent.text.lower())):
+            return dots
+
+    return None
+
+
 
 
 def get_element():
@@ -630,6 +632,8 @@ def get_element():
             # if not elements() in contacts:
             if (greendot):
 
+
+
                 parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,
                                                                                                             "..").find_element(
                     By.XPATH, "..")
@@ -637,20 +641,22 @@ def get_element():
 
                 cont_check = contact_save.new_contact(parent.text.lower())
 
-                find_date(parent)
 
 
-                if not find_date(parent):
+                dot = find_parents(greendot)
+                if dot:
 
                     if not cont_check and not is_new_message():
-
-                        greendot[-1].click()
+                        dot.click()
                         # sleep(1)
                         send_message()
                     else:
                         # sleep(1)
                         send_message()
                 else:
+
+
+
                     # sleep(1)
                     send_message()
 
