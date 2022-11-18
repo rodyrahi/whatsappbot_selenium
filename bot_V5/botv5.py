@@ -616,10 +616,13 @@ def find_parents(greendot):
             "..").find_element(
             By.XPATH, "..")
         parent = parent.find_element(By.CLASS_NAME, "_3q9s6")
-        if find_no(str(parent.text.lower())):
+        print(parent.text)
+        if find_no(str(parent.text.lower())) and not parent.text.lower() == "my personal":
             return dots
 
     return None
+
+
 
 
 
