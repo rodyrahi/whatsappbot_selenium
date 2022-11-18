@@ -576,8 +576,6 @@ def send_message():
         message = str(last_message()).split()
         message = message[0]
         save_contact().drop_col(message)
-
-
         single_start.send()
 
         print(message)
@@ -617,8 +615,17 @@ def find_parents(greendot):
             By.XPATH, "..")
         parent = parent.find_element(By.CLASS_NAME, "_3q9s6")
         print(str(parent.text.lower()))
+
+        num = str(parent.text.lower())
+        num = num.replace(" ", "")
+        num = num.replace("+91", "")
+        cont_check = contact_save.new_contact(num)
+
+
+
         if find_no(str(parent.text.lower())) or parent.text.lower() == "rajvendra":
-            return dots
+            if not cont_check:
+                return dots
 
     return None
 
@@ -659,12 +666,13 @@ def get_element():
 
                 print(parent , "this")
 
-                cont_check = contact_save.new_contact(parent)
 
-                if not cont_check:
 
-                    dot = find_parents(greendot)
-                    if dot:
+
+
+                dot = find_parents(greendot)
+                if dot:
+
 
                         if not is_new_message():
                             dot.click()
@@ -673,12 +681,12 @@ def get_element():
                         else:
                             # sleep(1)
                             send_message()
-                    else:
+
+                else:
+                    # sleep(1)
+                    send_message()
 
 
-
-                        # sleep(1)
-                        send_message()
 
             else:
                 # sleep(1)
