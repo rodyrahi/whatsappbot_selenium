@@ -1,5 +1,5 @@
 import csv
-
+import pandas as pd
 import os
 from datetime import date
 
@@ -35,6 +35,11 @@ def new_contact(cont):
         return False
 
 
+def drop_col(cont):
+    data = pd.read_csv('contacts.csv',header=None , delim_whitespace=True)
 
 
 
+
+
+drop_col("59")
