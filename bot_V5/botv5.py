@@ -31,24 +31,18 @@ filepath = os.getcwd()
 
 user = os.getlogin()
 
-
-
-
-
 options = Options()
-options.add_argument('--profile-directory=Person 1')
+options.add_argument('--profile-directory=deepanshu')
 options.add_argument(
     "user-data-dir=C:\\Users\\" + user + "\\AppData\\Local\\Google\\Chrome\\User Data\\")
 driver = webdriver.Chrome("C:\dev\chromedriver\chromedriver.exe", options=options)
 driver.get('https://web.whatsapp.com')
 
-
-
 input("enter")
 print(filepath)
 
 intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy', 'hy', 'hlo', 'hallo']
-
+admins = ['my personal' , 'raj chatbot' , 'ayush chatbot']
 
 class Schedulecall():
     def __init__(self, m=None):
@@ -56,12 +50,13 @@ class Schedulecall():
 
     def send(self):
         try:
-            url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + get_contact() + ' ' + self.message
+            contact = get_contact().lower().replace("+91" , "")
+            url = 'https://web.whatsapp.com/send?phone=+919352191921+&text=' + contact + ' ' + self.message
             driver.get(url)
             sleep(10)
             click_btn = driver.find_element(By.XPATH,
                                             '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button')
-            click_btn.click()
+            click_btn.send_keys(Keys.ENTER)
             sleep(1)
 
         except:
@@ -75,11 +70,7 @@ def get_contact():
     return contact
 
 
-
-
 class save_contact():
-
-
 
     def insert_contact(self, cont):
         filename = 'contacts.csv'
@@ -94,7 +85,7 @@ class save_contact():
             # writing the data rows
             csvwriter.writerow(rows)
 
-    def new_contact(self ,cont):
+    def new_contact(self, cont):
         filename = 'contacts.csv'
         with open(filename, 'r', newline='') as f:
 
@@ -111,12 +102,17 @@ class save_contact():
     def drop_col(self, cont):
         data = pd.read_csv('contacts.csv')
         data = data.drop(labels=cont, axis=1)
+
     def send(self):
         print("save number")
-        self.insert_contact(get_contact())
+
+        self.insert_contact(get_contact().replace(" " , ""))
         self.contacts = get_contact()
 
+
 save_contact_ = save_contact()
+
+
 class Questions():
 
     def __init__(self, message, op1=None, op2=None, op3=None, op4=None, op5=None, op6=None):
@@ -131,8 +127,6 @@ class Questions():
     def opt_check(self):
         if not last_message() == bot_last_message():
             lm = last_message()
-
-
 
             if lm == "1" and self.op1:
 
@@ -161,7 +155,7 @@ class Questions():
                 for q in self.op6:
                     q.send()
             else:
-                if last_message() == "1" or last_message()=="2" or last_message()=="3" or last_message() == "4" or last_message() == "5" or last_message()=="6":
+                if last_message() == "1" or last_message() == "2" or last_message() == "3" or last_message() == "4" or last_message() == "5" or last_message() == "6":
 
                     return
                 else:
@@ -199,14 +193,19 @@ class Questions():
 
 presentation_video = Questions(message=[
 
-    '''
+'''
 
-PRESENTATION VIDEO
+**PRESENTATION VIDEO**
+
 https://youtu.be/PfJuuQJvGjM
+
 Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"
 😇
-My Instagram Handle 👇🏻
+
+**My Instagram Handle** 👇🏻
+
 https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
+
 
 '''
 
@@ -339,12 +338,17 @@ https://leadsguru.in/?ref=Deepanshu29"
 
 ])
 question_7b = Questions(message=[
-
-    '''
-Phonpe Gpay Paytm
-Same number (8619202808)
-Send me screenshot after payment 😊
 '''
+Phonpe Gpay Paytm
+Same number 8619202808
+Send me screenshot after payment 😊
+
+₹2299 - Silver
+₹4130 - Gold
+₹9997 - Platinum
+(GST included)
+'''
+
 
 ])
 continue_with_gs = Questions(message=[
@@ -407,7 +411,12 @@ single_start = Questions(message=[
     'bot is started for the client'
 ])
 end = Questions(message=[
-    'thanks for giving your time :)'
+    '''
+ thanks for giving your time :)   
+ Type "Hey" to RESTART
+    '''
+
+
 ])
 
 current_question = question_1
@@ -415,7 +424,6 @@ current_question = question_1
 
 def is_matched(a, b):
     r = SequenceMatcher(a=a.lower(), b=b.lower()).ratio()
-
 
     if r >= 0.9:
         return True
@@ -456,7 +464,6 @@ def bot_last_message():
         lastmessage = lastmessage[-1].find_element(By.CLASS_NAME, '_1Gy50')
         message = lastmessage.text
 
-
         return message
     else:
         return None
@@ -487,12 +494,14 @@ question_3.op1 = [question_4]
 question_3.op2 = [presentation_link, question_3]
 
 question_4.op1 = [question_2b, money_problem]
-question_4.op2 = [question_2b, money_problem]
+question_4.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), question_1b  ]
 question_4.op3 = [send_file(filepath=filepath + r'\voicemails\money_problem.ogg'), question_3b]
 question_4.op4 = [question_5]
 
-money_problem.op1 = [save_contact() ,send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b , Schedulecall(m="lead is ready to pay")]
-money_problem.op2 = [[save_contact() ,send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_6b , Schedulecall(m="lead is ready to pay using link")]]
+money_problem.op1 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b,
+                     Schedulecall(m="lead is ready to pay")]
+money_problem.op2 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_6b,
+                      Schedulecall(m="lead is ready to pay using link")]
 money_problem.op3 = [question_3b]
 
 question_5.op1 = [send_file(filepath=filepath + r'\voicemails\money_problem.ogg'), question_4]
@@ -517,7 +526,7 @@ question_1b.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'),
 
 question_2b.op1 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b, save_contact(),
                    Schedulecall(m='lead is ready to pay')]
-question_2b.op2 = [question_6b,save_contact(),
+question_2b.op2 = [question_6b, save_contact(),
                    Schedulecall(m='lead is ready to pay')]
 
 question_3b.op1 = [question_4b]
@@ -557,12 +566,14 @@ def find_question():
 
 
 def send_message():
-    if last_message() == 'admin-stop':
+    sleep(1)
+    print(get_contact())
+    # if str(get_contact().lower()) in admins:
+    if last_message() == 'admin-stop' and str(get_contact().lower()) in admins :
         stop_bot.send()
         funcs.stop = True
 
-
-    if "single-stop" in last_message():
+    if "single-stop" in last_message() and str(get_contact().lower()) in admins:
         message = str(last_message()).split()
         message = message[0]
         contact_save.insert_contact(message)
@@ -572,59 +583,65 @@ def send_message():
 
         print(message)
 
-    if "single-start" in last_message():
+    if "single-start" in last_message() and str(get_contact().lower()) in admins:
         message = str(last_message()).split()
         message = message[0]
         save_contact().drop_col(message)
-
-
         single_start.send()
 
         print(message)
 
     else:
-        if bot_last_message() == None:
-            send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
-            presentation_video.send()
-            question_2.send()
-        elif not last_message() == bot_last_message():
-            if not funcs.stop:
-                if not contact_save.new_contact(get_contact()):
-                    # find_question()
+        print(str(get_contact().lower()))
+        if not str(get_contact().lower()) in admins:
+            if bot_last_message() == None:
+                send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
+                presentation_video.send()
+                question_2.send()
+            elif not last_message() == bot_last_message():
+                if not funcs.stop:
 
-                    if not find_question() and is_new_message():
+                    if not contact_save.new_contact(get_contact()):
+                        # find_question()
 
-                        send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
-                        presentation_video.send()
-                        question_2.send()
+                        if not find_question() and is_new_message():
+                            send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
+                            presentation_video.send()
+                            question_2.send()
+
+                else:
+                    if last_message() == "admin-start":
+                        start_bot.send()
+                        funcs.stop = False
+                        funcs.find = True
+                    funcs.find = True
 
             else:
-                if last_message() == "admin-start":
-                    start_bot.send()
-                    funcs.stop = False
-                    funcs.find = True
                 funcs.find = True
-
-        else:
-            funcs.find = True
 
 
 def find_parents(greendot):
     for dots in greendot:
+
         parent = dots.find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(
             By.XPATH,
             "..").find_element(
             By.XPATH, "..")
-        parent = parent.find_element(By.CLASS_NAME, "_3q9s6")
+        parent = parent.find_element(By.CLASS_NAME, "zoWT4")
         print(str(parent.text.lower()))
-        if find_no(str(parent.text.lower())) or parent.text.lower() == "rajvendra":
-            return dots
+
+        num = str(parent.text.lower())
+        num = num.replace(" ", "")
+
+        cont_check = contact_save.new_contact(num)
+
+        if find_no(str(parent.text.lower())) or str(parent.text.lower()) == "my personal" :
+            if not cont_check:
+                return dots
+            else:
+                return None
 
     return None
-
-
-
-
 
 
 def get_element():
@@ -645,40 +662,32 @@ def get_element():
             # if not elements() in contacts:
             if (greendot):
 
+                parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,"..").find_element(By.XPATH, "..")
+                print(parent)
+                parent = parent.find_element(By.CLASS_NAME, "zoWT4")
 
-
-                parent = greendot[0].find_element(By.XPATH, "..").find_element(By.XPATH, "..").find_element(By.XPATH,
-                                                                                                            "..").find_element(
-                    By.XPATH, "..")
-                parent = parent.find_element(By.CLASS_NAME , "_3q9s6")
                 parent = str(parent.text.lower())
-                parent = parent.replace(" " , "")
+                parent = parent.replace(" ", "")
                 parent = parent.replace("+91", "")
 
+                print(parent, "this")
 
+                dot = find_parents(greendot)
+                if dot:
 
-                print(parent , "this")
-
-                cont_check = contact_save.new_contact(parent)
-
-                if not cont_check:
-
-                    dot = find_parents(greendot)
-                    if dot:
-
-                        if not is_new_message():
-                            dot.click()
-                            # sleep(1)
-                            send_message()
-                        else:
-                            # sleep(1)
-                            send_message()
-                    else:
-
-
-
+                    if not is_new_message():
+                        dot.click()
                         # sleep(1)
                         send_message()
+                    else:
+                        # sleep(1)
+                        send_message()
+
+                else:
+                    # sleep(1)
+                    send_message()
+
+
 
             else:
                 # sleep(1)
