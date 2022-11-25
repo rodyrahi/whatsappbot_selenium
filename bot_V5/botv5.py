@@ -42,7 +42,7 @@ input("enter")
 print(filepath)
 
 intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy', 'hy', 'hlo', 'hallo']
-admins = ['my personal' , 'rajvendra' , '12344' ,'59']
+admins = ['my personal' , 'rajvendra' ]
 
 
 def wait(m):
@@ -82,7 +82,9 @@ class Schedulecall():
     def send(self):
         try:
             contact = get_contact().lower().replace("+91" , "")
-            url = 'https://web.whatsapp.com/send?phone=+919352191921+&text=' + contact + ' ' + self.message
+            # url = 'https://web.whatsapp.com/send?phone=+919352191921+&text=' + contact + ' ' + self.message
+            url = 'https://web.whatsapp.com/send?phone=+918109204371+&text=' + contact + ' ' + self.message
+
             driver.get(url)
             sleep(10)
             click_btn = driver.find_element(By.XPATH,
@@ -388,7 +390,8 @@ Send me screenshot after payment 😊
 buy_platinum = Questions(message=[
 '''
 Click The Link To Pay 👇
-upi://pay?pa=8619202808@paytm&am=9997&tn=Leads Guru Platinum&cu=INR&mc=5817
+upi://pay?pa=8619202808@paytm&pn=Deepanshu&tr=RPYupipl0kigfziztffsaj3KigfZizTFfsa&am=9997&tn=LeadsGuruPlatinum&cu=INR&mc=5817
+
 Send me screenshot after payment 😊
 '''
 ])
@@ -396,7 +399,8 @@ Send me screenshot after payment 😊
 buy_gold = Questions(message=[
 '''
 Click The Link To Pay 👇
-upi://pay?pa=8619202808@paytm&am=4130&tn=Leads Guru Gold&cu=INR&mc=5817
+upi://pay?pa=8619202808@paytm&pn=Deepanshu&tr=RPYupipl0kigfziztffsaj3KigfZizTFfsa&am=4130&tn=LeadsGuruGold&cu=INR&mc=5817
+
 Send me screenshot after payment 😊
 '''
 ])
@@ -404,7 +408,8 @@ Send me screenshot after payment 😊
 buy_silver = Questions(message=[
 '''
 Click The Link To Pay 👇
-upi://pay?pa=8619202808@paytm&am=2299&tn=Leads Guru Silver&cu=INR&mc=5817
+upi://pay?pa=8619202808@paytm&pn=Deepanshu&tr=RPYupipl0kigfziztffsaj3KigfZizTFfsa&am=2299&tn=LeadsGuruSilver&cu=INR&mc=5817
+
 Send me screenshot after payment 😊
 '''
 ])
@@ -619,7 +624,7 @@ def find_question():
     bot_message = bot_last_message()
     if bot_message:
         if is_matched(presentation_video.m[-1], bot_last_message()):
-            if wait(bot_last_time()) >= 10:
+            if wait(bot_last_time()) >= 1:
                 question_2.send()
 
         else:
@@ -635,7 +640,6 @@ def find_question():
 
 
 def send_message():
-    sleep(1)
     print(get_contact())
     # if str(get_contact().lower()) in admins:
     if last_message() == 'admin-stop' and str(get_contact().lower()) in admins :
@@ -666,17 +670,21 @@ def send_message():
             if bot_last_message() == None:
                 send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
                 presentation_video.send()
-                question_2.send()
+                print( wait(bot_last_time()))
+                if wait(bot_last_time()) >= 1:
+
+                    question_2.send()
             elif not last_message() == bot_last_message():
                 if not funcs.stop:
-
                     if not contact_save.new_contact(get_contact()):
                         # find_question()
 
                         if not find_question() and is_new_message():
                             send_file(filepath=filepath + r'\voicemails\intro_note.ogg').send()
                             presentation_video.send()
-                            question_2.send()
+                            print(wait(bot_last_time()))
+                            if wait(bot_last_time()) >= 1:
+                                question_2.send()
 
                 else:
                     if last_message() == "admin-start":
