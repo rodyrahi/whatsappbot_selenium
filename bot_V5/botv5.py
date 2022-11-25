@@ -3,7 +3,7 @@ from difflib import SequenceMatcher
 import pandas as pd
 from defs import *
 import time
-
+from datetime import datetime
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import contact_save
@@ -44,6 +44,37 @@ print(filepath)
 intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy', 'hy', 'hlo', 'hallo']
 admins = ['my personal' , 'rajvendra' , '12344' ,'59']
 
+
+def wait(m):
+    print(m)
+
+    m = m.strip()
+    try:
+        t1 = datetime.strptime(m , "%H:%M")
+        t2 = datetime.now()
+        t = t2.minute-t1.minute
+        return t
+    except:
+        pass
+
+
+
+
+
+def bot_last_time():
+    lastmessage = driver.find_elements(By.CLASS_NAME, 'message-out')
+
+    if lastmessage:
+        lastmessage = lastmessage[-1].find_element(By.CLASS_NAME, '_1beEj')
+        message = lastmessage.text
+        message = str(message).replace("PM" , "")
+        message = message.replace("AM" , "")
+        return message
+    else:
+        return None
+
+m = str(bot_last_time())
+print(wait(m))
 class Schedulecall():
     def __init__(self, m=None):
         self.message = m
@@ -353,6 +384,30 @@ Send me screenshot after payment 😊
 
 
 ])
+
+buy_platinum = Questions(message=[
+'''
+Click The Link To Pay 👇
+upi://pay?pa=8619202808@paytm&am=9997&tn=Leads Guru Platinum&cu=INR&mc=5817
+Send me screenshot after payment 😊
+'''
+])
+
+buy_gold = Questions(message=[
+'''
+Click The Link To Pay 👇
+upi://pay?pa=8619202808@paytm&am=4130&tn=Leads Guru Gold&cu=INR&mc=5817
+Send me screenshot after payment 😊
+'''
+])
+
+buy_silver = Questions(message=[
+'''
+Click The Link To Pay 👇
+upi://pay?pa=8619202808@paytm&am=2299&tn=Leads Guru Silver&cu=INR&mc=5817
+Send me screenshot after payment 😊
+'''
+])
 continue_with_gs = Questions(message=[
     '''
 DO YOU STILL WANT TO CONTINUE WITH GOLD OR SILVER?
@@ -500,7 +555,7 @@ question_4.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), 
 question_4.op3 = [send_file(filepath=filepath + r'\voicemails\money_problem.ogg'), question_3b]
 question_4.op4 = [question_5]
 
-money_problem.op1 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b,
+money_problem.op1 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), buy_platinum,
                      Schedulecall(m="lead is ready to pay")]
 money_problem.op2 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_6b,
                       Schedulecall(m="lead is ready to pay using link")]
@@ -523,8 +578,10 @@ question_7.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), 
 question_7.op3 = [question_5]
 question_7.op4 = [question_2]
 
-question_1b.op1 = [question_2b]
-question_1b.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), question_2b]
+question_1b.op1 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), buy_platinum,
+                     Schedulecall(m="lead is ready to pay")]
+question_1b.op2 = [send_file(filepath=filepath + r'\voicemails\plat_pitch.ogg'), save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), buy_gold,
+                     Schedulecall(m="lead is ready to pay")]
 
 question_2b.op1 = [send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), question_7b, save_contact(),
                    Schedulecall(m='lead is ready to pay')]
@@ -539,13 +596,17 @@ question_3b.op2 = [send_file(filepath=filepath + "\screenshots\gold_ss.jpeg"),
 continue_with_gs.op1 = [question_4b]
 continue_with_gs.op2 = [question_5b]
 
-question_4b.op1 = [question_2b]
+question_4b.op1 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), buy_silver,
+                     Schedulecall(m="lead is ready to pay")]
 question_4b.op2 = [silver_disadvantage, question_5b]
 question_4b.op3 = [question_7]
 
-question_5b.op1 = [question_2b]
-question_5b.op2 = [question_2b]
-question_5b.op3 = [question_2b]
+question_5b.op1 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), buy_platinum,
+                     Schedulecall(m="lead is ready to pay")]
+question_5b.op2 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), buy_gold,
+                     Schedulecall(m="lead is ready to pay")]
+question_5b.op3 = [save_contact(), send_file(filepath=filepath + r'\voicemails\after_sale.ogg'), buy_silver,
+                     Schedulecall(m="lead is ready to pay")]
 
 question_list = []
 
@@ -557,14 +618,20 @@ for obj in gc.get_objects():
 def find_question():
     bot_message = bot_last_message()
     if bot_message:
-        for q in question_list:
-            if is_matched(q.m[-1], bot_message):
-                if last_message():
-                    q.opt_check()
-                    return True
+        if is_matched(presentation_video.m[-1], bot_last_message()):
+            if wait(bot_last_time()) >= 10:
+                question_2.send()
+
+        else:
+            for q in question_list:
+                if is_matched(q.m[-1], bot_message):
+                    if last_message():
+                        q.opt_check()
+                        return True
         return False
     else:
         return False
+
 
 
 def send_message():
