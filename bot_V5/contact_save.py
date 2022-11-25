@@ -36,10 +36,6 @@ def new_contact(cont):
 
 
 def drop_col(cont):
-    data = pd.read_csv('contacts.csv',header=None , delim_whitespace=True)
+    pass
+    # data = pd.read_csv('contacts.csv',header=None , delim_whitespace=True)
 
-
-
-
-
-drop_col("59")

@@ -32,7 +32,7 @@ filepath = os.getcwd()
 user = os.getlogin()
 
 options = Options()
-options.add_argument('--profile-directory=deepanshu')
+options.add_argument('--profile-directory=Person 1')
 options.add_argument(
     "user-data-dir=C:\\Users\\" + user + "\\AppData\\Local\\Google\\Chrome\\User Data\\")
 driver = webdriver.Chrome("C:\dev\chromedriver\chromedriver.exe", options=options)
@@ -42,7 +42,7 @@ input("enter")
 print(filepath)
 
 intro = ['hey', 'hello', 'hi', 'hii', 'hola', 'heyy', 'hy', 'hlo', 'hallo']
-admins = ['my personal' , 'raj chatbot' , 'ayush chatbot']
+admins = ['my personal' , 'rajvendra' , '12344' ,'59']
 
 class Schedulecall():
     def __init__(self, m=None):
@@ -128,12 +128,12 @@ class Questions():
         if not last_message() == bot_last_message():
             lm = last_message()
 
-            if lm == "1" and self.op1:
+            if lm == "1"  or lm == "interested" or lm == "yes" and self.op1:
 
                 for q in self.op1:
                     q.send()
 
-            elif lm == "2" and self.op2:
+            elif lm == "2" or lm == "not interested" or lm == "no" and self.op2:
 
                 for q in self.op2:
                     q.send()
@@ -195,14 +195,14 @@ presentation_video = Questions(message=[
 
 '''
 
-**PRESENTATION VIDEO**
+*PRESENTATION VIDEO*
 
 https://youtu.be/PfJuuQJvGjM
 
 Watch the full presentation without any distractions and get back to me by typing "INTERESTED" or "NOT INTERESTED"
 😇
 
-**My Instagram Handle** 👇🏻
+*My Instagram Handle* 👇🏻
 
 https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
 
@@ -213,7 +213,7 @@ https://instagram.com/deepsuccessss?igshid=YmMyMTA2M2Y=
 
 presentation_link = Questions(message=[
     '''
-PRESENTATION VIDEO
+*PRESENTATION VIDEO*
 https://youtu.be/PfJuuQJvGjM
     '''
 
@@ -251,14 +251,16 @@ question_4 = Questions(message=[
 ])
 
 question_5 = Questions(message=[
-    'To choose an Option TYPE 1 , 2 , 3 , 4 or 5',
+'''
+To choose an Option TYPE 1 , 2 , 3 , 4 or 5
 
-    '1. I HAVE MONEY PROBLEM',
-    '2. SELF DOUBT',
-    '3. HOW TO EARN THROUGH LEADSGURU?',
-    '4. TRUST ISSUE',
-    '5. I HAVE ANOTHER QUERY',
-    '6. WHAT TO DO AFTER BUYING THE PACKAGE'
+1. I HAVE MONEY PROBLEM
+2. SELF DOUBT
+3. HOW TO EARN THROUGH LEADSGURU?
+4. TRUST ISSUE
+5. I HAVE ANOTHER QUERY
+6. WHAT TO DO AFTER BUYING THE PACKAGE
+'''
 ])
 question_6 = Questions(message=[
     'To choose an Option TYPE 1 or 2 ',
@@ -411,10 +413,10 @@ single_start = Questions(message=[
     'bot is started for the client'
 ])
 end = Questions(message=[
-    '''
- thanks for giving your time :)   
- Type "Hey" to RESTART
-    '''
+'''
+thanks for giving your time :)   
+Type "Hey" to RESTART
+'''
 
 
 ])
@@ -635,7 +637,7 @@ def find_parents(greendot):
 
         cont_check = contact_save.new_contact(num)
 
-        if find_no(str(parent.text.lower())) or str(parent.text.lower()) == "my personal" :
+        if find_no(str(parent.text.lower())) or str(parent.text.lower()) in admins:
             if not cont_check:
                 return dots
             else:
